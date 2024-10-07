@@ -1,0 +1,78 @@
+[
+	{
+		"Name": "1001",
+		"NPCName": "Jon Iron",
+		"NPCProfissao": "Ferreiro",
+		"Receitas": []
+	},
+	{
+		"Name": "1002",
+		"NPCName": "Scarlet Orrar",
+		"NPCProfissao": "Alfaiate",
+		"Receitas": [
+			{
+				"ItemaSerCraftado":
+				{
+					"itemId": 10001,
+					"itemName": "Tocha",
+					"quantity": 1,
+					"Ico": "/Script/Engine.Texture2D'/Game/Assets/2DAssets/IcoItens/tochaico.tochaico'",
+					"UseItensEnum": "10001"
+				},
+				"Receitas": [
+					{
+						"itemId": 10002,
+						"Quantidade": 1
+					},
+					{
+						"itemId": 10003,
+						"Quantidade": 1
+					}
+				],
+				"MemberVar_21": 0
+			},
+			{
+				"ItemaSerCraftado":
+				{
+					"itemId": 10002,
+					"itemName": "Pao",
+					"quantity": 1,
+					"Ico": "/Script/Engine.Texture2D'/Game/Assets/2DAssets/IcoItens/paoico.paoico'",
+					"UseItensEnum": "10002"
+				},
+				"Receitas": [
+					{
+						"itemId": 10001,
+						"Quantidade": 1
+					},
+					{
+						"itemId": 10003,
+						"Quantidade": 1
+					}
+				],
+				"MemberVar_21": 0
+			},
+			{
+				"ItemaSerCraftado":
+				{
+					"itemId": 10003,
+					"itemName": "Pocao",
+					"quantity": 1,
+					"Ico": "/Script/Engine.Texture2D'/Game/Assets/2DAssets/IcoItens/pocaoico.pocaoico'",
+					"UseItensEnum": "10003"
+				},
+				"Receitas": [
+					{
+						"itemId": 10001,
+						"Quantidade": 1
+					},
+					{
+						"itemId": 10002,
+						"Quantidade": 1
+					}
+				],
+				"MemberVar_21": 0
+			}
+		]
+	}
+]
