@@ -285,10 +285,10 @@ server.on('connection', (socket: any) => {
     socket.on('close', () => {
         QueueBuffer.removeSocket(socket.id);
         clients.delete(socket.id);
-        mapas.forEach(mapa => {
+       /* mapas.forEach(mapa => {
             if(socket.character.id)
                  mapa.removePlayer(socket.character.id);
-        });
+        });*/
        broadcast(packets.removecharacter(socket.characterId),socket.id)
         console.log(`Player disconnected ${socket.id}`);
     });
