@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+	  "outDir": "./dist",  // Define a pasta de saída como "dist"
+	  "rootDir": "./src",  // Define a pasta raiz como "src"
+	  "target": "es6",     // Configura o alvo de compatibilidade JavaScript
+	  "module": "commonjs" // Usado para compatibilidade com Node.js
+	},
+	"include": ["src/**/*"]
+  }
+  
