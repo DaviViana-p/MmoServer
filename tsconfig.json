@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "es6", // ou outro alvo que você esteja usando
+      "module": "commonjs", // ou outro módulo que você esteja usando
+      "strict": true,
+      "esModuleInterop": true, // Habilitando esModuleInterop
+      "skipLibCheck": true, // Opcional, pode ajudar a evitar erros em arquivos de definição de tipo
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist", // Se você estiver especificando um diretório de saída
+      "rootDir": "./src" // Se você estiver especificando um diretório de entrada
+    },
+    "include": ["src/**/*"], // Certifique-se de que suas fontes estão incluídas
+    "exclude": ["node_modules", "**/*.spec.ts"] // Excluindo node_modules e testes
+  }
+  
