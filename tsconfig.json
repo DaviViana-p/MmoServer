@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es6", // ou outro alvo que você esteja usando
-    "module": "commonjs", // ou outro módulo que você esteja usando
+    "target": "es6", 
+    "module": "commonjs", 
     "strict": true,
-    "esModuleInterop": true, // Habilitando esModuleInterop
-    "skipLibCheck": true, // Opcional, pode ajudar a evitar erros em arquivos de definição de tipo
+    "esModuleInterop": true, 
+    "skipLibCheck": true, 
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./public", // Diretório de saída para os arquivos compilados
-    "rootDir": "./src" // Diretório raiz dos arquivos TypeScript
+    "outDir": "./public", 
+    "rootDir": "./src" 
   },
-  "include": ["src/**/*"], // Incluindo todos os arquivos na pasta src
-  "exclude": ["node_modules", "**/*.spec.ts"] // Excluindo node_modules e testes
+  "include": ["src/**/*"], 
+  "exclude": ["node_modules", "**/*.spec.ts"] 
 }
