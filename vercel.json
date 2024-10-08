@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "outDir": "./public",  
+      "rootDir": "./src",    
+      "target": "es6",
+      "module": "commonjs"
+    },
+    "include": ["src/**/*"]
+  }
+  

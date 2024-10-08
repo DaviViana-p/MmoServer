@@ -4,7 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "dev": "nodemon",
-    "build": "[mmoserver] build --output public",
+    "build": "tsc src/index.ts --outDir public",
     "start": "node index.js",
     "server": "ts-node src/server.ts"
   },
