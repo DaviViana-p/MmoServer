@@ -3,7 +3,6 @@ import { ByteBuffer } from "./lib/bytebuffer";
 import { QueueBuffer } from "./lib/queuebuffer";
 import * as packets from './packets';
 import { characters } from './interfaces/characters.interface';
-import * as vector3 from './vector3'
 import { updateCharacterInfo, updateCharacterMapId } from './DB/db.connect';
 import * as inventario from './inventario'
 
@@ -154,7 +153,7 @@ class Mapa {
     }
     
     coletaritem(socket: any){
-
+                
         inventario.adicionaraoinventario("10002", 1, socket.conteinerids, `{
             "itemName": "Sword of Valor",
             "durability": 100,
