@@ -87,7 +87,7 @@ export function createCharacter(accountId: number, playerName: string, initialLe
         nome: playerName,
         characterinfo: JSON.stringify({ level: initialLevel }),
         accountID: accountId,
-        map_id: 0
+        map_id: 1
     };
 
     // Insere o personagem no banco de dados
