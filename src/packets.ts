@@ -100,10 +100,11 @@ export function entrarnomundo(mapNamespace:string, character:any): ByteBuffer {
     return buffer;
 }
 
-export function spawnproxy(characterName:number, characterInfo:string): ByteBuffer {
+export function spawnproxy(characterName:string, characterInfo:string): ByteBuffer {
     let buffer = new ByteBuffer();
     buffer.putByte(7);
-    buffer.putInt32(characterName);
+    console.log('name:',characterName,'infos:',characterInfo)
+    buffer.putString(characterName);
     buffer.putString(characterInfo);
     return buffer;
 }

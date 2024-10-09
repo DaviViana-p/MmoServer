@@ -59,7 +59,7 @@ server.on('connection', (socket: any) => {
 
                         if (map) {
                             // Chama a função movePlayer do mapa para mover o jogador
-                            map.movePlayer(socket.character.id.toString(), x, y, z, xr, yr, zr, velocity);
+                            map.movePlayer(socket.character.nome, x, y, z, xr, yr, zr, velocity);
                         } else {
                             console.error(`Mapa com ID ${socket.character.map_id} não encontrado.`);
                         }
@@ -168,7 +168,7 @@ server.on('connection', (socket: any) => {
 
                         
                         // Adiciona o jogador ao mapa com a posição correta
-                        mapaatual.addPlayer(socket.characterId.toString(), socket, {
+                        mapaatual.addPlayer(socket.character.nome, socket, {
                             ...socket.character,
                             posX,         
                             posY,
@@ -193,8 +193,8 @@ server.on('connection', (socket: any) => {
                             }
                         });
                         
-
-                        mapaatual.broadcast(packets.spawnproxy(socket.character.id,socket.character.characterinfo),socket.character.id.toString());
+                        console.log(socket.character.nome);
+                        mapaatual.broadcast(packets.spawnproxy(socket.character.nome,socket.character.characterinfo),socket.character.id.toString());
                         // Enviar o pacote de entrada no mundo
                         sendPacket(socket, packets.entrarnomundo(socket.mapNamespace, socket.character));
                     } else {
