@@ -113,9 +113,9 @@ class Mapa {
     
             // Atualizar a posição do jogador
             const characterData = JSON.parse(character.characterinfo);
-            characterData.posX = 0;
-            characterData.posY = 0;
-            characterData.posZ = 0;
+            characterData.posX = newPosX;
+            characterData.posY = newPosY;
+            characterData.posZ = newPosZ;
             characterData.currentMap = mapaid; // Atualiza o mapa atual do jogador
         
             // Converte de volta para string JSON
