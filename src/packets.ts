@@ -109,10 +109,10 @@ export function spawnproxy(characterName:string, characterInfo:string): ByteBuff
     return buffer;
 }
 
-export function removecharacter(characterName:number,): ByteBuffer {
+export function removecharacter(characterName:string,): ByteBuffer {
     let buffer = new ByteBuffer();
     buffer.putByte(8);
-    buffer.putInt32(characterName);
+    buffer.putString(characterName);
     return buffer;
 }
 

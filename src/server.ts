@@ -166,7 +166,7 @@ server.on('connection', (socket: any) => {
                            console.log('mapavazio:',mapa);
                         }else
 
-                        
+                        console.log('socket.character.nome:',socket.character.nome)
                         // Adiciona o jogador ao mapa com a posição correta
                         mapaatual.addPlayer(socket.character.nome, socket, {
                             ...socket.character,
@@ -181,20 +181,12 @@ server.on('connection', (socket: any) => {
                                 socket.inventory = inventory;
                                 
                                 socket.conteinerids = containerIds;
-                                
-
-                                console.log("Inventário carregado:", socket.inventory);
-                                console.log("containerIds carregados:", containerIds);
-                                console.log("containerIds setados:", socket.conteinerids);
-                                // Serializa os dados do inventário e envia para o cliente
-                               // sendPacket(socket,packets.packetInventory(socket.inventory));  // Função para enviar os dados para o cliente (exemplo)
                             } else {
                                 console.log("Nenhum inventário encontrado ou erro ao carregar.");
                             }
                         });
-                        
-                        console.log(socket.character.nome);
-                        mapaatual.broadcast(packets.spawnproxy(socket.character.nome,socket.character.characterinfo),socket.character.id.toString());
+
+                        mapaatual.broadcast(packets.spawnproxy(socket.character.nome,socket.character.characterinfo),socket.character.nome);
                         // Enviar o pacote de entrada no mundo
                         sendPacket(socket, packets.entrarnomundo(socket.mapNamespace, socket.character));
                     } else {
@@ -242,14 +234,13 @@ server.on('connection', (socket: any) => {
                     // Certifique-se de que o `characterId` foi atribuído
                     if (socket.characterId !== undefined) {
                         if (atualmap) {
-                            atualmap.transportPlayer(socket.characterId.toString(), mapa, 0, 0, 0,targetMapName); // Teletransporta o jogador
+                            atualmap.transportPlayer(socket.character.nome, mapa, 0, 0, 0,targetMapName); // Teletransporta o jogador
                             // Atualize o map_id do personagem após o teletransporte
                             socket.character.map_id = targetMapName;
                             //console.log(`Teleporting player ${socket.characterId} to map ${targetMapName} at position (-360, -2150, 810).`);
-                            console.log('character.id:',socket.character.id);
-                            console.log('socket.character:',socket.character,'br',socket.character);
-                            atualmap.broadcast(packets.removecharacter(socket.character.id),socket.id);
-                            console.log(socket.character.id)
+                            //console.log('character.id:',socket.character.nome);
+                           // console.log('socket.character:',socket.character,'br',socket.character);
+                            atualmap.broadcast(packets.removecharacter(socket.character.nome),socket.id);
                             sendPacket(socket, packets.entrarnomundo(targetMapName, socket.character));
                         } else {
                             console.error("Current map not found.");
@@ -291,7 +282,7 @@ server.on('connection', (socket: any) => {
             if(socket.character.id)
                  mapa.removePlayer(socket.character.id);
         });*/
-       broadcast(packets.removecharacter(socket.characterId),socket.id)
+       broadcast(packets.removecharacter(socket.character.nome),socket.id)
         console.log(`Player disconnected ${socket.id}`);
     });
 

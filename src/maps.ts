@@ -33,8 +33,8 @@ class Mapa {
         this.clients.set(clientId, socket);
         this.entities.set(clientId, character); // Adiciona o personagem do jogador ao mapa
        // console.log(`Player ${character.nome} entrou no mapa ${this.namespace}`);
-       // console.log('entities:',this.entities);
-       // console.log('clients:',this.clients);
+        console.log('entities:',this.entities);
+        console.log('clients:',this.clients);
     }
 
     // Remove um jogador do mapa
@@ -61,6 +61,7 @@ class Mapa {
 
     // Atualiza a posição de um jogador no mapa e faz broadcast para os outros
     movePlayer(clientId: string, x: number, y: number, z: number, xr: number, yr: number, zr: number, velocity: string) {
+        //console.log('clientid:',clientId)
         const character = this.entities.get(clientId);
         const velocityString: string = velocity; // Exemplo de string de velocity
         const velocityArray: string[] = velocityString.split(","); // Divide a string por vírgula
@@ -126,10 +127,10 @@ class Mapa {
             // Atualiza as informações no banco de dados
             updateCharacterInfo(character.id, newCharacterInfo, (success) => {
                 if (success) {
-                    console.log(`Player ${character.nome} foi transportado para o mapa ${newMap.namespace}.`);
+                    console.log(`Player ${socket.character.nome} foi transportado para o mapa ${newMap.namespace}.`);
                     
                     // Adicionar o jogador ao novo mapa
-                    newMap.addPlayer(clientId, socket, character);
+                    newMap.addPlayer(socket.character.nome, socket, character);
                     
                     // Atualizar o ID do mapa no banco de dados, certifique-se de passar o ID correto
                     updateCharacterMapId(character.id, mapaid, (updateSuccess) => {
