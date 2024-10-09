@@ -33,8 +33,8 @@ class Mapa {
         this.clients.set(clientId, socket);
         this.entities.set(clientId, character); // Adiciona o personagem do jogador ao mapa
        // console.log(`Player ${character.nome} entrou no mapa ${this.namespace}`);
-        console.log('entities:',this.entities);
-        console.log('clients:',this.clients);
+        //console.log('entities:',this.entities);
+       // console.log('clients:',this.clients);
     }
 
     // Remove um jogador do mapa
@@ -49,7 +49,7 @@ class Mapa {
         
         this.clients.forEach((client, clientId) => {
             if (clientId !== exceptId) { // Não enviar para o jogador de origem
-                console.log('excepted',{exceptId});
+               // console.log('excepted',{exceptId},{clientId});
                 client.send(message.getBuffer());
             }else
               //console.log('cliet',{clientId});
@@ -96,14 +96,14 @@ class Mapa {
           // console.log(`Player ${character.nome} moved to (${x}, ${y}, ${z},${vx}, ${vy}, ${vz})`);
     
             // Faz broadcast para os outros jogadores no mapa
-            this.broadcast(packets.packetMove(clientId, { x, y, z, xr, yr, zr },vx,vy,vz), character.id.toString());
+            this.broadcast(packets.packetMove(clientId, { x, y, z, xr, yr, zr },vx,vy,vz), character.nome.toString());
         }
     }
         
     }
 
     // Função para transportar um jogador de um mapa para outro
-    transportPlayer(clientId: string, newMap: Mapa, newPosX: number, newPosY: number, newPosZ: number,mapaid:string) {
+    transportPlayer(clientId: string, newMap: Mapa, newPosX: string, newPosY: string, newPosZ: string,mapaid:string) {
         const character = this.entities.get(clientId);  // Obtém o personagem pelo clientId
         const socket = this.clients.get(clientId);      // Obtém o socket do cliente correspondente
     

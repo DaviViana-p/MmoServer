@@ -234,7 +234,7 @@ server.on('connection', (socket: any) => {
                     // Certifique-se de que o `characterId` foi atribuído
                     if (socket.characterId !== undefined) {
                         if (atualmap) {
-                            atualmap.transportPlayer(socket.character.nome, mapa, 0, 0, 0,targetMapName); // Teletransporta o jogador
+                            atualmap.transportPlayer(socket.character.nome, mapa, '0', '0', '0',targetMapName); // Teletransporta o jogador
                             // Atualize o map_id do personagem após o teletransporte
                             socket.character.map_id = targetMapName;
                             //console.log(`Teleporting player ${socket.characterId} to map ${targetMapName} at position (-360, -2150, 810).`);

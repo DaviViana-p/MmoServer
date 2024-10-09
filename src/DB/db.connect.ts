@@ -5,8 +5,8 @@ import { inventario } from '../interfaces/inventario.interface';
 
 
 // Conexão com o banco de dados SQLite
-const db = new sqlite3.Database('/home/ec2-user/mmoserver/src/DB/meu_banco.db', (err) => {
-//const db = new sqlite3.Database('C:\\Users\\Davia\\Desktop\\Pasta Trabalhando\\Server\\src\\DB\\meu_banco.db', (err) => {
+//const db = new sqlite3.Database('/home/ec2-user/mmoserver/src/DB/meu_banco.db', (err) => {
+const db = new sqlite3.Database('C:\\Users\\Davia\\Desktop\\Pasta Trabalhando\\Server\\src\\DB\\meu_banco.db', (err) => {
     if (err) {
         console.error('Error opening database ' + err.message);
     }
