@@ -140,6 +140,12 @@ export function packetInventory(inventory: any[],containerIds: any[]): ByteBuffe
 }
 
 
-
+export function packetBroadcastMessage(playerName:string,textMessage: string): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(10);  // Tipo de mensagem para broadcast
+    buffer.putString(playerName);
+    buffer.putString(textMessage);
+    return buffer;
+}
 
 

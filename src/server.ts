@@ -7,6 +7,7 @@ import * as packets from './packets';
 import { characters} from './interfaces/characters.interface';
 import { contas } from './interfaces/contas.interface'; 
 import * as DB from './DB/db.connect'
+import * as chat from './chat'
 
 
 
@@ -262,12 +263,9 @@ server.on('connection', (socket: any) => {
                 break;
                 
                 case 7: // Add Item to Inventory
-                let map = mapas.get(socket.mapNamespace);
                 
                 mapaatual?.coletaritem(socket);
                 
-                    
-                    
                 break;
                 
                 case 8: // Query Inventory
@@ -276,6 +274,10 @@ server.on('connection', (socket: any) => {
                 break;
                 case 8: // useitem
                //   handleUseItem(message, id);
+                break;
+                case 9:
+                    console.log("case 9")
+                    chat.handleBroadcastMessage(socket, message);
                 break;
 
 
@@ -301,7 +303,7 @@ export function sendPacket(socket: any, packet: ByteBuffer){
     ConcurrentByteBufferPool.release(packet);
 }
 
-function broadcast(message: ByteBuffer, id: string){
+export function broadcast(message: ByteBuffer, id: string){
     clients.forEach((client, idSocket) => {
         if(idSocket !== id)
             //QueueBuffer.addBuffer(id, message);
