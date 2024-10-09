@@ -48,7 +48,7 @@ class Mapa {
     broadcast(message: ByteBuffer, exceptId: string) {
         
         this.clients.forEach((client, clientId) => {
-            if (clientId !== exceptId) { // Não enviar para o jogador de origem
+            if (clientId) { // Não enviar para o jogador de origem
                // console.log('excepted',{exceptId});
                 client.send(message.getBuffer());
             }else
