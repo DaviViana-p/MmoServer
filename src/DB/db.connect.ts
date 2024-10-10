@@ -2,11 +2,12 @@ import sqlite3 from 'sqlite3';
 import { characters} from '../interfaces/characters.interface';
 import { contas } from '../interfaces/contas.interface'; 
 import { inventario } from '../interfaces/inventario.interface'; 
+import { CharacterInfoFormat } from './characterinfoformat';
 
 
 // Conexão com o banco de dados SQLite
 //const db = new sqlite3.Database('/home/ec2-user/mmoserver/src/DB/meu_banco.db', (err) => {
-const db = new sqlite3.Database('C:\\Users\\Davia\\Desktop\\Pasta Trabalhando\\Server\\src\\DB\\meu_banco.db', (err) => {
+const db = new sqlite3.Database('C:/Users/Davia/Desktop/Pasta Trabalhando/Server/src/DB/meu_banco.db', (err) => {
     if (err) {
         console.error('Error opening database ' + err.message);
     }
@@ -82,11 +83,77 @@ export function loadCharacter(accountId: string, callback: (character: character
 }
 
 // Função para criar um novo personagem
-export function createCharacter(accountId: number, playerName: string, initialLevel: number, callback: (character: characters) => void) {
+// Função para criar um novo personagem
+export function createCharacter(accountId: number, playerName: string, initialLevel: number, callback: (character: characters | null) => void) {
+    // Criando a estrutura de characterinfo com dados detalhados
+    const characterInfoJson:string = `{
+        "name": "${playerName}",
+        "aparence": "Cavaleiro",
+        "status": {
+            "forca": 5,
+            "destreza": 5,
+            "vitalidade": 5,
+            "magia": 5
+        },
+        "tags": ["Novato", "Tester"],
+        "gameplayVariables": {
+            "transform": { 
+                "x": 0, "y": 0, "z": 0, 
+                "xr": 0, "yr": 0, "zr": 0, 
+                "ex": 1, "ey": 1, "er": 1 
+            },
+            "velocity": { "x": 1, "y": 1, "z": 1 },
+            "atualMap": "1",
+            "containers": { "container1": ["item1", "item2"] }
+        },
+        "conjuracao": {
+            "magiaSagrada": 0,
+            "magiaDeAgua": 0,
+            "magiaDeFogo": 0,
+            "magiaDeAr": 0,
+            "necromancia": 0,
+            "cura": 0,
+            "metamagia": 0
+        },
+        "especializacaoCombate": {
+            "guerreiro": 0,
+            "mago": 0,
+            "sacerdote": 0,
+            "assassino": 0
+        },
+        "habilidades": ["criarchama", "criaragua"],
+        "magias": { "fireball": 2, "waterball": 3 },
+        "profissoes": {
+            "pescador": 0,
+            "pintor": 0,
+            "bardo": 0,
+            "dancarino": 0,
+            "cozinheiro": 0,
+            "herbalista": 0,
+            "mestreDasBestas": 0,
+            "alfaiate": 0,
+            "construtor": 0,
+            "alquimista": 0,
+            "comerciante": 0
+        },
+        "equipamentos": {
+        "elmo": "Iron Helmet",
+        "peitoral": "Iron Chestplate",
+        "calca": "Iron Pants",
+        "bota": "Iron Boots",
+        "aneis": "Gold Ring",
+        "capa": "Red Cloak",
+        "colar": "Silver Necklace",
+        "amuleto": "Mystic Amulet"
+    },
+        "quests": { "Iniciando no Mundo": "completa", "Primeiros Passos": "incompleta" },
+        "craftsMemorizados": { "picareta": "picareta grande", "mesa": "mesa normal" }
+    }`;
+
     const newCharacter: characters = {
         id: 0,  // O banco de dados autoincrementará este campo
         nome: playerName,
-        characterinfo: JSON.stringify({ level: initialLevel }),
+        characterinfo: characterInfoJson, // Usando o JSON com informações detalhadas
         accountID: accountId,
         map_id: 1
     };
@@ -98,7 +165,7 @@ export function createCharacter(accountId: number, playerName: string, initialLe
             function(err) {
                 if (err) {
                     console.error("Erro ao criar personagem:", err.message);
-                    return callback(newCharacter); // Erro ao criar personagem
+                    return callback(null); // Retorna null se ocorrer erro
                 }
 
                 // Após inserir o personagem, pegamos o ID gerado automaticamente
@@ -119,7 +186,7 @@ export function createCharacter(accountId: number, playerName: string, initialLe
                     });
             });
 }
-
+ 
 
 export function getPasswordByEmail(email: string, callback: (password: string | null) => void) {
     db.get<contas>(`SELECT senha FROM contas WHERE email = ?`, [email], (err, row) => {
@@ -159,6 +226,7 @@ export function getCharactersByAccountId(accountId: number, callback: (character
                 characterinfo: row.characterinfo,  // A propriedade characterinfo deve existir no banco de dados
                 accountID: row.accountID,
                 map_id: row.map_id
+
             }));
             callback(charactersList);  // Retorna a lista de personagens como um array de objetos characters[]
         } else {
@@ -218,7 +286,7 @@ export function updateCharacterInfo(characterId: number, newCharacterInfo: strin
         [newCharacterInfo, characterId],
         function (err) {
             if (err) {
-               // console.error(`Erro ao atualizar characterinfo do personagem com ID ${characterId}: ${err.message}`);
+                console.error(`Erro ao atualizar characterinfo do personagem com ID ${characterId}: ${err.message}`);
                 callback(false);  // Retorna false em caso de erro
             } else {
                // console.log(`Characterinfo do personagem com ID ${characterId} atualizado com sucesso.`);

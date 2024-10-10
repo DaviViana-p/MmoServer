@@ -8,8 +8,9 @@ export function handleBroadcastMessage(socket:any, message:ByteBuffer) {
         const textMessage = message.getString();
         const playerName = message.getString();
         console.log(textMessage);
+        console.log(playerName);
 
-        server.broadcast(packets.packetBroadcastMessage(playerName,textMessage),socket.character.id.toString())
+        server.broadcast(packets.packetBroadcastMessage(playerName,textMessage),socket.characterId)
 
         console.log(`Mensagem transmitida de ${playerName}: ${textMessage}`);
     }

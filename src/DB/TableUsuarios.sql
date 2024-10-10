@@ -20,6 +20,7 @@ CREATE TABLE contas (
     
 );
 
+delete from characters;
 ALTER TABLE characters ADD COLUMN transform TEXT;
 
 UPDATE characters 

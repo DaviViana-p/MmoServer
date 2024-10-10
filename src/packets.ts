@@ -77,9 +77,10 @@ export function packetCharactersList(charactersList: characters[]): ByteBuffer {
     let buffer = new ByteBuffer();
     buffer.putByte(4); // Exemplo de tipo de pacote para lista de personagens
 
-    buffer.putInt32(charactersList.length); // Adiciona o número de personagens
-
+    buffer.putInt32(charactersList.length - 1); // Adiciona o número de personagens
+    
     charactersList.forEach((character: characters) => {
+        console.log('name',character.nome)
         buffer.putInt32(character.id);
         buffer.putString(character.nome);
         buffer.putString(character.characterinfo);
@@ -89,14 +90,14 @@ export function packetCharactersList(charactersList: characters[]): ByteBuffer {
     return buffer;
 }
 
-export function entrarnomundo(mapNamespace:string, character:any): ByteBuffer {
+export function entrarnomundo(mapNamespace:string, socket:any): ByteBuffer {
     let buffer = new ByteBuffer();
     buffer.putByte(5);
-    buffer.putString(mapNamespace);
-    buffer.putInt32(character.id);
-    buffer.putString(character.nome);
-    buffer.putString(character.characterinfo);
-    buffer.putInt32(character.accountID);
+    buffer.putString(socket.character.gameplayVariables.atualMap.toString());
+    buffer.putInt32(socket.characterId);
+    buffer.putString(socket.character.name);
+    buffer.putString(JSON.stringify(socket.character));
+    console.log(socket.accountID)
     return buffer;
 }
 

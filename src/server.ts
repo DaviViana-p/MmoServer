@@ -8,6 +8,7 @@ import { characters} from './interfaces/characters.interface';
 import { contas } from './interfaces/contas.interface'; 
 import * as DB from './DB/db.connect'
 import * as chat from './chat'
+import * as playerentiti from './entities/playerentiti'
 
 
 
@@ -28,9 +29,9 @@ server.on('connection', (socket: any) => {
     socket.id = id;
     clients.set(id, socket);
     socket.character = null;// characters | null = null
+    
     let conta: contas | null = null
     QueueBuffer.addSocket(id, socket);
-    let conteinerids = [];
     let mapaatual:Mapa | undefined;
     console.log(`Player connected ${id}`);
 
@@ -38,7 +39,8 @@ server.on('connection', (socket: any) => {
         const message = new ByteBuffer(ByteBuffer.toArrayBuffer(data));
         const encrypted = message.getByte();
         const type = message.getByte();
-        const accountId: number | undefined = conta?.id;  // Use `number | undefined` to account for possible undefined values
+        socket.accountID;  // Use `number | undefined` to account for possible undefined values
+  
         switch(type){
             case 0: // Move
                 const transform = message.getString(); // Obtém a string com os valores separados por vírgula
@@ -55,11 +57,10 @@ server.on('connection', (socket: any) => {
                     
                     // Verifica se o personagem existe e obtém o mapa
                     if (socket.character) {
-                        const map = mapas.get(socket.character.map_id.toString()); // Obtém o mapa usando o map_id do personagem
-
+                        const map = mapas.get(socket.character.gameplayVariables.atualMap); // Obtém o mapa usando o map_id do personagem
                         if (map) {
                             // Chama a função movePlayer do mapa para mover o jogador
-                            map.movePlayer(socket.character.nome, x, y, z, xr, yr, zr, velocity);
+                            map.movePlayer(socket.character.name, x, y, z, xr, yr, zr, velocity,socket);
                         } else {
                             console.error(`Mapa com ID ${socket.character.map_id} não encontrado.`);
                         }
@@ -102,6 +103,7 @@ server.on('connection', (socket: any) => {
                                     if (userData) {
                                         conta = userData; // Armazena os dados do usuário na variável User
                                         console.log(`User ${userData} logged in successfully.`);
+                                        socket.accountID = conta.id.toString();
                                         sendPacket(socket, packets.packetLoginSuccess());
             
                                         // Você também pode fazer outras ações com base nos dados do usuário aqui
@@ -124,16 +126,16 @@ server.on('connection', (socket: any) => {
             case 3: //carregar personagens da conta
                 
                 
-                if (accountId !== undefined) {
+                if (socket.accountID !== undefined) {
                     // Busca todos os personagens associados à conta
-                    DB.getCharactersByAccountId(accountId, (charactersList) => {
+                    DB.getCharactersByAccountId(socket.accountID, (charactersList) => {
                         if (charactersList && charactersList.length > 0) {
-                            console.log(`Found ${charactersList.length} characters for account ID: ${accountId}`);
+                            console.log(`Found ${charactersList.length} characters for account ID: ${socket.accountID}`);
                             
                             // Enviar os personagens ao cliente
                             sendPacket(socket, packets.packetCharactersList(charactersList));
                         } else {
-                            console.log(`No characters found for account ID: ${accountId}`);
+                            console.log(`No characters found for account ID: ${socket.accountID}`);
                         }
                     });
                 } else {
@@ -146,36 +148,30 @@ server.on('connection', (socket: any) => {
                 //console.log(mapas);
                 
                 DB.getCharacterById(socket.characterId, (fetchedCharacter) => {
-                    if (fetchedCharacter) {
-                        socket.character = fetchedCharacter;
+                    if (fetchedCharacter) {                        
+                        const characterJsonString =(fetchedCharacter.characterinfo);
+                        console.log(characterJsonString);
+                        socket.character = new playerentiti.PlayerEntity(characterJsonString);
+                        console.log(socket.character);
+                    
+                        
 
-
-                        // Acessar as coordenadas x, y, z do JSON
-                        const posX = socket.character.posX || 0; // Valor padrão 0 caso não tenha no JSON
-                        const posY = socket.character.posY || 0;
-                        const posZ = socket.character.posZ || 0;
-
-                        console.log(`Character found: ${socket.character.nome} at position (${posX}, ${posY}, ${posZ})`);
+                        console.log(`Character found: ${socket.character.name} at position (${socket.character.gameplayVariables.transform.x})`);
+                        
 
                         // Pega ou cria o mapa
-                        socket.mapNamespace = socket.character.map_id.toString();
-                        mapaatual = mapas.get(socket.mapNamespace);
+                        socket.character.gameplayVariables.atualMap.toString();
+                        mapaatual = mapas.get(socket.character.gameplayVariables.atualMap.toString());
                         if (!mapaatual) {
                             mapaatual = new Mapa(socket.mapNamespace);
                            // mapas.set(mapNamespace, mapa);
                            console.log('mapavazio:',mapa);
                         }else
 
-                        console.log('socket.character.nome:',socket.character.nome)
+                        console.log('socket.character.nome:',socket.character.name)
                         // Adiciona o jogador ao mapa com a posição correta
-                        mapaatual.addPlayer(socket.character.nome, socket, {
-                            ...socket.character,
-                            posX,         
-                            posY,
-                            posZ
-                        });
-
-                        DB.getContainerIdsByOwnerId(socket.character.id, (inventory, containerIds) => {
+                        mapaatual.addPlayer(socket.character.name, socket);
+                        DB.getContainerIdsByOwnerId(socket.characterId, (inventory, containerIds) => {
                             if (inventory) {
                                // console.log("Inventário carregado:", inventory);
                                 socket.inventory = inventory;
@@ -186,9 +182,9 @@ server.on('connection', (socket: any) => {
                             }
                         });
 
-                        mapaatual.broadcast(packets.spawnproxy(socket.character.nome,socket.character.characterinfo),socket.character.nome);
+                        mapaatual.broadcast(packets.spawnproxy(socket.character.name,socket.character.characterinfo),socket.character.name);
                         // Enviar o pacote de entrada no mundo
-                        sendPacket(socket, packets.entrarnomundo(socket.mapNamespace, socket.character));
+                        sendPacket(socket, packets.entrarnomundo(socket.mapNamespace, socket));
                     } else {
                         console.log(`Character with ID ${socket.characterId} not found.`);
                     }
@@ -196,8 +192,8 @@ server.on('connection', (socket: any) => {
             break;
             case 5: // Criar personagem
                     const characterName = message.getString(); // Nome do personagem
-                    if (accountId !== undefined && characterName) {
-                        DB.createCharacter(accountId, characterName, 0, (newCharacter) => {
+                    if (socket.accountID !== undefined && characterName) {
+                        DB.createCharacter(socket.accountID, characterName, 0, (newCharacter) => {
                             if (newCharacter) {
                                 console.log(`Character ${newCharacter.nome} created successfully.`);
 
@@ -206,7 +202,7 @@ server.on('connection', (socket: any) => {
 
                                 // Opcionalmente, você pode adicionar o personagem ao mapa ou processar de outra forma
                             } else {
-                                console.log(`Failed to create character for account ID ${accountId}.`);
+                                console.log(`Failed to create character for account ID ${socket.accountID}.`);
                                 // Enviar resposta de erro de criação de personagem
                                // sendPacket(socket, packets.packetCharacterCreationFailed());
                             }
@@ -225,7 +221,8 @@ server.on('connection', (socket: any) => {
                     //console.log("Target map found:", mapa);
                     
                     // Use the socket character's current map ID to fetch the current map
-                    const atualmapid: string = socket.character.map_id.toString();
+                    const atualmapid: string = socket.character.gameplayVariables.atualMap;
+                    console.log(atualmapid,socket.character.gameplayVariables.atualMap)
                     //console.log(atualmapid);
                     const atualmap: Mapa | undefined = mapas.get(atualmapid); // Obtém o mapa atual
             
@@ -234,14 +231,13 @@ server.on('connection', (socket: any) => {
                     // Certifique-se de que o `characterId` foi atribuído
                     if (socket.characterId !== undefined) {
                         if (atualmap) {
-                            atualmap.transportPlayer(socket.character.nome, mapa, '0', '0', '0',targetMapName); // Teletransporta o jogador
+                            atualmap.transportPlayer(mapa, '0', '0', '0',targetMapName,socket); // Teletransporta o jogador
                             // Atualize o map_id do personagem após o teletransporte
-                            socket.character.map_id = targetMapName;
                             //console.log(`Teleporting player ${socket.characterId} to map ${targetMapName} at position (-360, -2150, 810).`);
                             //console.log('character.id:',socket.character.nome);
                            // console.log('socket.character:',socket.character,'br',socket.character);
-                            atualmap.broadcast(packets.removecharacter(socket.character.nome),socket.id);
-                            sendPacket(socket, packets.entrarnomundo(targetMapName, socket.character));
+                           // console.log('socket.character',socket.character)
+                            sendPacket(socket, packets.entrarnomundo(targetMapName, socket));
                         } else {
                             console.error("Current map not found.");
                         }
@@ -267,7 +263,6 @@ server.on('connection', (socket: any) => {
                //   handleUseItem(message, id);
                 break;
                 case 9:
-                    console.log("case 9")
                     chat.handleBroadcastMessage(socket, message);
                 break;
 
@@ -282,7 +277,7 @@ server.on('connection', (socket: any) => {
             if(socket.character.id)
                  mapa.removePlayer(socket.character.id);
         });*/
-       broadcast(packets.removecharacter(socket.character.nome),socket.id)
+       broadcast(packets.removecharacter(socket.character.name),socket.id)
         console.log(`Player disconnected ${socket.id}`);
     });
 

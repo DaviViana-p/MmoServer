@@ -37,7 +37,7 @@ export function adicionaraoinventario(
                     if (success) {
                         console.log(`Novo item criado com sucesso no slot ${emptySlot} do container ${containerId}.`);
                         // Atualiza o inventário e envia para o cliente
-                        DB.getContainerIdsByOwnerId(socket.character.id, (updatedInventory) => {
+                        DB.getContainerIdsByOwnerId(socket.characterId, (updatedInventory) => {
                             if (updatedInventory) {
                                 socket.inventory = updatedInventory;
                                 server.sendPacket(socket, packets.packetInventory(socket.inventory, socket.conteinerids));
@@ -70,11 +70,11 @@ export function adicionaraoinventario(
 
 
 export function removerdoinventario(id: string) {
-
+    console.error("remover do inventario ainda nao implementado")
     return;
 }
 
 export function moverdeumslotprooutro(id: string) {
-
+    console.error("moverdeumslotprooutro ainda nao implementado")
     return;
 }
