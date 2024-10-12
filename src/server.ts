@@ -182,7 +182,7 @@ server.on('connection', (socket: any) => {
                             }
                         });
 
-                        mapaatual.broadcast(packets.spawnproxy(socket.character.name,socket.character.characterinfo),socket.character.name);
+                        //mapaatual.broadcast(packets.spawnproxy(socket.character.name,socket.character.characterinfo),socket.character.name);
                         // Enviar o pacote de entrada no mundo
                         sendPacket(socket, packets.entrarnomundo(socket.mapNamespace, socket));
                     } else {
@@ -202,13 +202,13 @@ server.on('connection', (socket: any) => {
 
                                 // Opcionalmente, você pode adicionar o personagem ao mapa ou processar de outra forma
                             } else {
-                                console.log(`Failed to create character for account ID ${socket.accountID}.`);
+                                console.error(`Failed to create character for account ID ${socket.accountID}.`);
                                 // Enviar resposta de erro de criação de personagem
                                // sendPacket(socket, packets.packetCharacterCreationFailed());
                             }
                         });
                     } else {
-                        console.log("Account ID or character name is missing.");
+                        console.error("Account ID or character name is missing.");
                         // Enviar resposta de erro se o ID da conta ou o nome do personagem estiver faltando
                        // sendPacket(socket, packets.packetCharacterCreationFailed());
                     }
@@ -222,7 +222,7 @@ server.on('connection', (socket: any) => {
                     
                     // Use the socket character's current map ID to fetch the current map
                     const atualmapid: string = socket.character.gameplayVariables.atualMap;
-                    console.log(atualmapid,socket.character.gameplayVariables.atualMap)
+                    //console.log(atualmapid,socket.character.gameplayVariables.atualMap)
                     //console.log(atualmapid);
                     const atualmap: Mapa | undefined = mapas.get(atualmapid); // Obtém o mapa atual
             

@@ -5,6 +5,8 @@ import * as packets from './packets';
 import { characters } from './interfaces/characters.interface';
 import { updateCharacterInfo, updateCharacterMapId } from './DB/db.connect';
 import * as inventario from './inventario'
+//import gatherablesData from '..datas/gatherables.json'; // Caminho para o arquivo JSON
+
 
 class Mapa {
     public id: string;
@@ -30,8 +32,8 @@ class Mapa {
     addPlayer(clientId: string, socket: any) {
         this.entities.set(clientId, socket);
        // console.log(`Player ${character.nome} entrou no mapa ${this.namespace}`);
-       this.broadcast(packets.spawnproxy(socket.character.name,socket.character.characterinfo),socket.character.name);
-        //console.log('entities:',this.entities);
+       this.broadcast(packets.spawnproxy(socket.character.name,JSON.stringify(socket.character.gameplayVariables.transform)),socket.character.name);
+        console.log('socket.character.characterinfo:',socket.character.gameplayVariables.transform,socket.character.name);
        // console.log('clients:',this.clients);
     }
 
