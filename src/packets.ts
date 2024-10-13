@@ -151,3 +151,21 @@ export function packetBroadcastMessage(playerName:string,textMessage: string): B
 }
 
 
+export function spawngatherables(gatherableInfo: string): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(11); 
+    buffer.putString(gatherableInfo)
+    //console.log('gatherableInfo:',gatherableInfo)
+
+    return buffer;
+}
+
+export function removegatherable(gatherableid: string): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(12); 
+    buffer.putString(gatherableid)
+    //console.log('gatherableInfo:',gatherableInfo)
+
+    return buffer;
+}
+

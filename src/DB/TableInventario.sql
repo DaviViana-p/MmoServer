@@ -6,7 +6,7 @@ CREATE TABLE inventario (
 );
 
 
-
+delete from itens;
 --seleciona todos os itens da table itens de um usuario.
 SELECT * FROM itens WHERE containerId = 10000;
 --adiciona um novo inventario

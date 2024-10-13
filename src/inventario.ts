@@ -26,7 +26,7 @@ export function adicionaraoinventario(
     // Verifica se o inventário foi carregado
     if (socket.inventory) {
         let itemAdded = false; // Flag para saber se o item foi adicionado
-
+        
         // Tenta adicionar o item ao primeiro slot disponível em qualquer contêiner
         for (let containerId of containerIds) { // Usa const para melhor prática
             // Tenta encontrar um slot vazio neste contêiner

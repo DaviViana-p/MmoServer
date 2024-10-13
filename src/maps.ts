@@ -2,17 +2,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { ByteBuffer } from "./lib/bytebuffer";
 import { QueueBuffer } from "./lib/queuebuffer";
 import * as packets from './packets';
-import { characters } from './interfaces/characters.interface';
 import { updateCharacterInfo, updateCharacterMapId } from './DB/db.connect';
 import * as inventario from './inventario'
-//import gatherablesData from '..datas/gatherables.json'; // Caminho para o arquivo JSON
+import gatherablesData from './datas/gatherables.json';  
+import { Gatherable } from './Gatherable';
+import { sendPacket } from './server';
 
 
 class Mapa {
     public id: string;
     public namespace: string; // Nome único do mapa
     public entities: Map<string, any>; // Armazena entidades (jogadores e NPCs)
-    private gatherables: any; // Adicione o tipo apropriado
+    private gatherables: Gatherable []; // Adicione o tipo apropriado
     private npcs: any; // Adicione o tipo apropriado
     private respawns: any; // Adicione o tipo apropriado
     private tickInterval: NodeJS.Timeout | null = null; // Timer para ticks
@@ -21,9 +22,29 @@ class Mapa {
         this.id = uuidv4(); // ID único para o mapa
         this.namespace = namespace;
         this.entities = new Map<string, any>(); // Entidades no mapa (jogadores, NPCs)
-        this.gatherables = options?.gatherables || [];
         this.npcs = options?.npcs || [];
         this.respawns = options?.respawns || [];
+        this.gatherables = options?.gatherables?.map((gatherableData: Gatherable) => {
+            // Verifique se gatherableData está definido e possui as propriedades necessárias
+            if (!gatherableData || !gatherableData.type || !gatherableData.position) {
+                console.error('Gatherable data is invalid:', gatherableData);
+                return null; // Retorna null para dados inválidos
+            }
+            
+            // Gerar um id único para cada gatherable
+            const id = uuidv4();
+            
+            return new Gatherable(
+                gatherableData.type,
+                gatherableData.position, // Usa a posição especificada no JSON de entrada
+                gatherableData.gatherTime || 2,  // Usa o tempo de coleta do JSON ou um valor padrão
+                gatherableData.respawnTime || 60, // Usa o tempo de respawn do JSON ou um valor padrão
+                this, // Mapa atual
+                id    // Atribui o id gerado ao gatherable
+            );
+        }).filter((gatherable:any): gatherable is Gatherable => gatherable !== null);
+        
+        
         // Inicia o intervalo de ticks
         this.startTick()
     }
@@ -35,6 +56,7 @@ class Mapa {
        this.broadcast(packets.spawnproxy(socket.character.name,JSON.stringify(socket.character.gameplayVariables.transform)),socket.character.name);
         console.log('socket.character.characterinfo:',socket.character.gameplayVariables.transform,socket.character.name);
        // console.log('clients:',this.clients);
+       
     }
 
     // Remove um jogador do mapa
@@ -148,21 +170,53 @@ class Mapa {
         }
     }
     
-    coletaritem(socket: any){
-                
-        inventario.adicionaraoinventario("10002", 1, socket.conteinerids, `{
-            "itemName": "Sword of Valor",
-            "durability": 100,
-            "rarity": "Rare",
-            "weight": 2.5,
-            "description": "A legendary sword imbued with magical power."
-        }`,socket);
+    coletaritem(socket: any, targetid: string) {    
+        for (const gatherable of this.gatherables) {
+            if (gatherable.id === targetid && gatherable.isAvailable) {
+                gatherable.collect(socket);
+                break;  
+            }
+        }
+    }
+
+    spawnmesh(socket: any, message:ByteBuffer){
+        
+
     }
     
+    sendgatherables() {
+        const gatherableData: { id: string; type:string, transform: { x: number, y: number, z: number },isAvailable:string }[] = [];
+    
+        this.gatherables.forEach((gatherable: Gatherable) => {
+            if(gatherable.isAvailable){
+                const gatherableInfo = JSON.parse(gatherable.getid()); // Obtenha o ID e a posição
+                
+                // Adicionar o ID e a posição (transform) ao array
+                gatherableData.push({
+                    id: gatherableInfo.id,
+                    type: gatherableInfo.type,
+                    transform: gatherableInfo.position,
+                    isAvailable: gatherableInfo.isAvailable
+                });
+            }
+
+            
+        });
+        //console.log('gatherableInfo:',gatherableData)
+        const result = JSON.stringify({
+            length: gatherableData.length,
+            gatherables: gatherableData
+        });
+       
+        
+        this.entities.forEach(entitie => {        
+            this.broadcast(packets.spawngatherables(result),entitie.id);
+            });
+
+        return result;
+    }
     
 
-
-    // Retorna uma lista de jogadores presentes no mapa
     getPlayers() {
         return Array.from(this.entities.values());
     }
@@ -178,7 +232,11 @@ class Mapa {
         //console.log(`Mapa ${this.namespace} processando tick...`);
         // Exemplo: Atualizar estados dos personagens ou verificar respawns
       //console.log(this.namespace,this.getPlayers())
+      //this.sendgatherables();
+      //console.log(this.gatherables)
+      this.sendgatherables();
     }
 }
+
 
 export { Mapa };

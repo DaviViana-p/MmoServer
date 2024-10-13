@@ -1,0 +1,28 @@
+{
+    "gatherables": [
+      {
+        "type": "Tree",
+        "position": { "x": -8173, "y": -4231, "z": 141 }
+      },
+      {
+        "type": "Pedra",
+        "position": { "x": -7250, "y": -5000, "z": 120 }
+      },
+      {
+        "type": "Crystal Shard",
+        "position": { "x": -6000, "y": -3000, "z": 200 }
+      }
+    ],
+    "npcs": [
+        {
+          "id": "npc1",
+          "position": { "x": -8000, "y": -4500, "z": 100 }
+        }
+    ],
+    "respawns": [
+        {
+          "id": "respawn1",
+          "position": { "x": -7500, "y": -4800, "z": 130 }
+        }
+    ]
+}

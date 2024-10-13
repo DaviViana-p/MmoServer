@@ -9,12 +9,14 @@ import { contas } from './interfaces/contas.interface';
 import * as DB from './DB/db.connect'
 import * as chat from './chat'
 import * as playerentiti from './entities/playerentiti'
+import * as path from 'path';
+import * as fs from 'fs';
 
 
 
 import { Mapa } from './maps'; // Importando a classe Mapa
 
-import * as fs from 'fs';
+
 
 
 const port = 3001;
@@ -249,9 +251,14 @@ server.on('connection', (socket: any) => {
                 }
                 break;
                 
-                case 7: // Add Item to Inventory
+                case 7: // collectGatherable
+                const targetid = message.getString();
+                if (targetid != '') {
+                    console.log(targetid)
+                    mapaatual?.coletaritem(socket, targetid);    
+                    
+                }
                 
-                mapaatual?.coletaritem(socket);
                 
                 break;
                 
@@ -312,29 +319,51 @@ function parseMapData(mapData: string) {
     return parsedData;
 }
 
+
 function initializeMaps() {
-    DB.getAllMaps((maps) => {
-        maps.forEach((map) => {
-            const mapNamespace = map.map_id.toString();
-            console.log('inicializando mapa:',mapNamespace);
+    const mapsDir = path.join(__dirname, 'datas');
 
-            // Tente fazer o parse dos JSONs e capture erros
+    // Ler os arquivos na pasta 'datas'
+    fs.readdir(mapsDir, (err, files) => {
+        if (err) {
+            console.error('Erro ao ler a pasta:', err);
+            return;
+        }
+
+        // Filtrar apenas os arquivos JSON que começam com 'map'
+        const mapFiles = files.filter(file => file.startsWith('map') && file.endsWith('.json'));
+
+        mapFiles.forEach((file) => {
+            const mapNamespace = file.replace('.json', '').replace('map', ''); // Extraindo o ID do arquivo
+            const mapFilePath = path.join(mapsDir, file); // Caminho completo do arquivo
+            console.log('inicializando mapa:', mapNamespace);
+
             try {
-                const gatherables = parseMapData(map.gatherables_id);
-                const npcs = parseMapData(map.npcs_id);
-                const respawns = parseMapData(map.respawns);
+                // Ler o arquivo JSON do mapa
+                const mapData = JSON.parse(fs.readFileSync(mapFilePath, 'utf-8'));
 
+                // Extrair gatherables, npcs e respawns do JSON
+                const gatherables = mapData.gatherables || [];
+                const npcs = mapData.npcs || [];
+                const respawns = mapData.respawns || [];
+
+                // Passa os gatherables diretamente para o construtor do Mapa
                 const mapa = new Mapa(mapNamespace, {
-                    gatherables,
+                    gatherables, // Passa os gatherables extraídos do JSON
                     npcs,
                     respawns,
                 });
+                
                 mapas.set(mapNamespace, mapa);
             } catch (error) {
-                console.error(`Error parsing data for map ${mapNamespace}:`, error);
+                console.error(`Error reading or parsing map file for map ${mapNamespace}:`, error);
             }
         });
     });
 }
+
+
+
+
 
 console.log(`Server Listem ${port}`);
