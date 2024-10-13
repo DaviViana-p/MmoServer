@@ -4,7 +4,6 @@ import { QueueBuffer } from "./lib/queuebuffer";
 import * as packets from './packets';
 import { updateCharacterInfo, updateCharacterMapId } from './DB/db.connect';
 import * as inventario from './inventario'
-import gatherablesData from './datas/gatherables.json';  
 import { Gatherable } from './Gatherable';
 import { sendPacket } from './server';
 
@@ -37,8 +36,6 @@ class Mapa {
             return new Gatherable(
                 gatherableData.type,
                 gatherableData.position, // Usa a posição especificada no JSON de entrada
-                gatherableData.gatherTime || 2,  // Usa o tempo de coleta do JSON ou um valor padrão
-                gatherableData.respawnTime || 60, // Usa o tempo de respawn do JSON ou um valor padrão
                 this, // Mapa atual
                 id    // Atribui o id gerado ao gatherable
             );

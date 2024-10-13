@@ -1,7 +1,6 @@
 {
     "gatherables": [
       {
-        "id": "0",
         "type": "Tree",
         "description": "Arvore Comum.",
         "gatherTime": 2,
@@ -9,7 +8,6 @@
         "weight": 0.1
       },
       {
-        "id": "1",
         "type": "Pedra",
         "description": "Pedra Basica.",
         "gatherTime": 3,
@@ -17,8 +15,7 @@
         "weight": 0.2
       },
       {
-        "id": "2",
-        "type": "Crystal Shard",
+        "type": "Crystal_Shard",
         "description": "Um fragmento de cristal imbuído de energia mágica.",
         "gatherTime": 5,
         "respawnTime": 300,
