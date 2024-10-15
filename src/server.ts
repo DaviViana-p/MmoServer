@@ -272,6 +272,28 @@ server.on('connection', (socket: any) => {
                 case 9:
                     chat.handleBroadcastMessage(socket, message);
                 break;
+                    
+                case 10:
+                    let Construcao;
+                    let gatherabletype = message.getString();
+                    if(gatherabletype === 'Construcao'){
+                        Construcao = message.getString();
+                        console.log(gatherabletype,Construcao)
+                    }
+                    
+                    
+                    let gathertransform = message.getString(); // Exemplo: "-8592,-3463,-79,0,0,173,1,1,1"
+
+                    // Usar split para dividir a string em um array de valores
+                    const [x, y, z, rx, ry, rz, ex, ey, ez]: number[] = gathertransform.split(',').map(Number);
+                    
+                    if (Construcao) {
+                        mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez},Construcao)
+                    } else {
+                        mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez})
+                    }
+                    
+                break;
 
 
         }
@@ -284,8 +306,9 @@ server.on('connection', (socket: any) => {
             if(socket.character.id)
                  mapa.removePlayer(socket.character.id);
         });*/
-       broadcast(packets.removecharacter(socket.character.name),socket.id)
-        console.log(`Player disconnected ${socket.id}`);
+        if(socket.character.name !== null){
+            broadcast(packets.removecharacter(socket.character.name),socket.id)}
+             console.log(`Player disconnected ${socket.id}`);
     });
 
     broadcast(packets.packetCreatePlayer(id), id);

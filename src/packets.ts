@@ -117,26 +117,33 @@ export function removecharacter(characterName:string,): ByteBuffer {
     return buffer;
 }
 
-export function packetInventory(inventory: any[],containerIds: any[]): ByteBuffer {
+export function packetInventory(inventory: any[], containerIds: any[]): ByteBuffer {
     let buffer = new ByteBuffer();
-    buffer.putByte(9); // Define um código de pacote para o inventário (o número 8 é apenas um exemplo)
+    buffer.putByte(9); // Define um código de pacote para o inventário (o número 9 é apenas um exemplo)
 
-    buffer.putInt32(containerIds.length);
-    containerIds.forEach(conteinerid =>{
-        buffer.putInt32(conteinerid);
-    })
-    // Primeiro, enviamos o número total de itens no inventário
-    buffer.putInt32(inventory.length);
+    try {
+        // Tenta processar os containerIds
+        buffer.putInt32(containerIds.length);
+        containerIds.forEach(conteinerid => {
+            buffer.putInt32(conteinerid);
+            buffer.putInt32(inventory.length); // Suponho que isso esteja relacionado aos itens no inventário de cada contêiner
+        
+            // Iterar por cada item no inventário e adicionar seus dados ao buffer
+        inventory.forEach(item => {
+            buffer.putInt32(item.id);
+            buffer.putString(item.idtipo);
+            buffer.putInt32(item.amount);
+            buffer.putString(item.containerId);
+            buffer.putInt32(item.slotId);
+            buffer.putString(item.props); 
+        });
+        
+        });
+    } catch (error) {
+        console.error('Erro ao processar containerIds no packetInventory:');
+    }
 
-    // Iterar por cada item no inventário e adicionar seus dados ao buffer
-    inventory.forEach(item => {
-        buffer.putInt32(item.id);
-        buffer.putString(item.idtipo);
-        buffer.putInt32(item.amount);
-        buffer.putString(item.containerId);
-        buffer.putInt32(item.slotId);
-        buffer.putString(item.props); 
-    });
+    
 
     return buffer;
 }

@@ -32,6 +32,7 @@ class Mapa {
             
             // Gerar um id único para cada gatherable
             const id = uuidv4();
+            //console.log(gatherableData.position)
             
             return new Gatherable(
                 gatherableData.type,
@@ -176,13 +177,46 @@ class Mapa {
         }
     }
 
-    spawnmesh(socket: any, message:ByteBuffer){
+    createGatherable(type: string, position: { x: number, y: number, z: number,rx: number, ry: number, rz: number,ex: number, ey: number, ez: number},Construcao?: string) {
+        // Gera um ID único para o novo gatherable
         
 
+        const id = uuidv4();
+    
+        // Cria um novo objeto Gatherable
+        const newGatherable = new Gatherable(
+            type,        // Tipo do gatherable (ex: 'tree', 'stone', etc.)
+            position,    // Posição no mapa
+            this,        // Referência ao mapa atual
+            id,           // ID único
+            Construcao
+        );
+    
+        // Adiciona o novo gatherable à lista de gatherables do mapa
+        this.gatherables.push(newGatherable);
+    
+        console.log(`Novo gatherable do tipo ${type} criado na posição (${position.x}, ${position.y}, ${position.z}).`);
+    
+        // Opcional: Envia o gatherable recém-criado para todos os jogadores no mapa
+        const gatherableData = {
+            id: newGatherable.getid(),
+            type: newGatherable.type,
+            position: newGatherable.position,
+            isAvailable: newGatherable.isAvailable,
+            Construcao: newGatherable.Contrucao
+        };
+    
+        const result = JSON.stringify({
+            length: 1, // Apenas um gatherable foi criado
+            gatherables: [gatherableData]
+        });
+    
+        this.broadcast(packets.spawngatherables(result), '');
     }
     
+    
     sendgatherables() {
-        const gatherableData: { id: string; type:string, transform: { x: number, y: number, z: number },isAvailable:string }[] = [];
+        const gatherableData: { id: string; type:string, transform: { x: number, y: number, z: number,rx: number, ry: number, rz: number,ex: number, ey: number, ez: number },isAvailable:string,Construcao?:string }[] = [];
     
         this.gatherables.forEach((gatherable: Gatherable) => {
             if(gatherable.isAvailable){
@@ -193,7 +227,8 @@ class Mapa {
                     id: gatherableInfo.id,
                     type: gatherableInfo.type,
                     transform: gatherableInfo.position,
-                    isAvailable: gatherableInfo.isAvailable
+                    isAvailable: gatherableInfo.isAvailable,
+                    Construcao:gatherableInfo.Construcao || ''
                 });
             }
 

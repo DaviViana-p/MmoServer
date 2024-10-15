@@ -1,0 +1,26 @@
+{
+    "itens": [
+      {
+        "type": "Tree",
+        "description": "Arvore Comum.",
+        "gatherTime": 2,
+        "respawnTime": 60,
+        "weight": 0.1
+      },
+      {
+        "type": "Pedra",
+        "description": "Pedra Basica.",
+        "gatherTime": 3,
+        "respawnTime": 120,
+        "weight": 0.2
+      },
+      {
+        "type": "Crystal_Shard",
+        "description": "Um fragmento de cristal imbuído de energia mágica.",
+        "gatherTime": 5,
+        "respawnTime": 300,
+        "weight": 0.5
+      }
+    ]
+  }
+  

@@ -5,6 +5,7 @@
         "description": "Arvore Comum.",
         "gatherTime": 2,
         "respawnTime": 60,
+        "life": 50,
         "weight": 0.1
       },
       {
@@ -12,6 +13,7 @@
         "description": "Pedra Basica.",
         "gatherTime": 3,
         "respawnTime": 120,
+        "life": 10,
         "weight": 0.2
       },
       {
@@ -19,6 +21,15 @@
         "description": "Um fragmento de cristal imbuído de energia mágica.",
         "gatherTime": 5,
         "respawnTime": 300,
+        "life": 1,
+        "weight": 0.5
+      },
+      {
+        "type": "Construcao",
+        "description": "Um fragmento de cristal imbuído de energia mágica.",
+        "gatherTime": 5,
+        "respawnTime": 300,
+        "life": 1,
         "weight": 0.5
       }
     ]

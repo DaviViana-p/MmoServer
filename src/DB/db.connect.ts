@@ -3,6 +3,7 @@ import { characters} from '../interfaces/characters.interface';
 import { contas } from '../interfaces/contas.interface'; 
 import { inventario } from '../interfaces/inventario.interface'; 
 import { CharacterInfoFormat } from './characterinfoformat';
+import {Item} from '../interfaces/BaseItem'
 
 
 // Conexão com o banco de dados SQLite
@@ -374,6 +375,77 @@ export function createNewItem(idtipo: string, amount: number, containerId: numbe
         callback(true); // Retorna true se o item foi criado com sucesso
     });
 }
+
+export function updateItemAmount(idtipo: string, containerId: number, slotId: number, amountChange: number, callback: (success: boolean) => void) {
+    // Primeiro, vamos buscar o item para garantir que ele existe e pegar seu amount atual
+    const selectSql = `SELECT * FROM itens WHERE idtipo = ? AND containerId = ? AND slotId = ?`;
+    
+    db.get(selectSql, [idtipo, containerId, slotId], (err, row: Item | undefined) => { // Aqui definimos row como Item | undefined
+        if (err) {
+            console.error('Erro ao buscar item:', err.message);
+            callback(false); // Retorna false em caso de erro
+            return;
+        }
+
+        if (!row) {
+            console.log(`Item com idtipo ${idtipo}, containerId ${containerId}, e slotId ${slotId} não encontrado.`);
+            callback(false); // Item não encontrado
+            return;
+        }
+
+        // Calcula o novo amount
+        const newAmount = row.amount + amountChange;
+
+        if (newAmount < 0) {
+            console.log(`Não é possível retirar ${-amountChange} do item. O amount atual é ${row.amount}.`);
+            callback(false); // Não é possível retirar mais do que o disponível
+            return;
+        }
+
+        // Atualiza o amount do item
+        const updateSql = `UPDATE itens SET amount = ? WHERE idtipo = ? AND containerId = ? AND slotId = ?`;
+        db.run(updateSql, [newAmount, idtipo, containerId, slotId], function (updateErr) {
+            if (updateErr) {
+                console.error('Erro ao atualizar item:', updateErr.message);
+                callback(false); // Retorna false em caso de erro na atualização
+                return;
+            }
+
+            console.log(`Item atualizado com sucesso. Novo amount: ${newAmount}`);
+            callback(true); // Retorna true se a atualização foi bem-sucedida
+        });
+    });
+}
+
+
+export function deleteItem(idtipo: string, containerId: number, slotId: number, callback: (success: boolean) => void) {
+    const sql = `DELETE FROM itens WHERE idtipo = ? AND containerId = ? AND slotId = ?`;
+    db.run(sql, [idtipo, containerId, slotId], function (err) {
+        if (err) {
+            console.error('Erro ao deletar item:', err.message);
+            callback(false); // Retorna false em caso de erro
+            return;
+        }
+        console.log(`Item deletado com sucesso do slot ${slotId} no container ${containerId}.`);
+        callback(true); // Retorna true se a remoção foi bem-sucedida
+    });
+}
+
+export function updateslot(idtipo: string, containerId: number, slotId: number, callback: (success: boolean) => void) {
+    const updateSql = `UPDATE itens SET slotId = ? WHERE idtipo = ? AND containerId = ?`;
+    db.run(updateSql, [slotId, idtipo, containerId], function (err) {
+        if (err) {
+            console.error('Erro ao atualizar o slot:', err.message);
+            callback(false);
+        } else {
+            callback(true);
+        }
+    });
+}
+
+
+
+
 
 
 
