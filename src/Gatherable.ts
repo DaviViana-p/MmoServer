@@ -1,7 +1,7 @@
 import { Mapa } from './maps';
 import * as inventario from './inventario';
 import * as packets from './packets';
-import gatherablesData from './datas/tables/gatherables.json';  // Importa o JSON
+import gatherablesData from './datas/Tables/gatherables.json';  
 import * as Baseitem from './interfaces/BaseItem'
 
 export class Gatherable {
