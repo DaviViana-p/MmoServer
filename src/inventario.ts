@@ -32,7 +32,7 @@ export function adicionaraoinventario(
             // Se o item existe, verifica se é empilhável e se a quantidade é menor que maxStackSize
             if (item) {
                 try {
-                    console.log('Item encontrado:', item.containerId, item.slotId, item.idtipo);
+                    //console.log('Item encontrado:', item.containerId, item.slotId, item.idtipo);
                     const itemProps = JSON.parse(item.props);
                     
                     // Verifica se o item é empilhável e se a quantidade é menor que maxStackSize
@@ -109,7 +109,8 @@ export function adicionaraoinventario(
                 });
                 return; // Saída do loop principal após a criação de um novo item
             } else {
-                console.log(`item dropado no mapa.`);
+               // console.log('idtipo',idtipo)
+                socket.mapaatual?.createGatherable('item', socket.character.gameplayVariables.transform,idtipo);
             }
         }
     }
@@ -253,7 +254,37 @@ export function getItemAmount(idtipo: string, containerId: number, slotId: numbe
 }
 
 
-export function dropar(id: string) {
-    console.error("dropar ainda nao implementado");
-    return;
+/*export function dropar(idtipo: string, amount: number, containerId: number, slotId: number, socket: any) {
+    // Primeiro, verificamos se o item existe no inventário do jogador
+    const item = socket.inventory.find((i: any) => i.idtipo === idtipo && i.containerId === containerId && i.slotId === slotId);
+
+    if (!item) {
+        console.log(`Item com idtipo ${idtipo} não encontrado no slot ${slotId} do container ${containerId}.`);
+        return;
+    }
+
+    // Atualiza o stack do item ou remove o item completamente se o amount for igual ao item.amount
+    if (item.amount > amount) {
+        // Reduz o stack do item no inventário
+        removerstack(idtipo, amount, slotId, socket);
+    } else {
+        // Remove o item completamente do inventário
+        removerdoinventario(idtipo, slotId, socket);
+    }
+
+    // Agora precisamos criar o item no mundo, ou seja, gerar o "drop" no mapa
+    const dropPosition = socket.position; // Supondo que a posição do jogador seja conhecida no socket
+    const dropData = {
+        idtipo: idtipo,
+        amount: amount,
+        position: dropPosition, // Posição onde o item será droppado
+        droppedBy: socket.characterId // Para identificar quem droppou o item, caso necessário
+    };
+
+    socket.mapaatual?.createGatherable(dropData.idtipo,socket.position)
+    // Envia o pacote de criação do item para os jogadores próximos
+    //server.sendPacketToNearbyPlayers(socket, packets.packetDropItem(dropData));
+
+    console.log(`Item ${idtipo} com quantidade ${amount} droppado no mapa na posição ${JSON.stringify(dropPosition)}.`);
 }
+*/

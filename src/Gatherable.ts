@@ -7,24 +7,31 @@ import * as Baseitem from './interfaces/BaseItem'
 export class Gatherable {
     public id: string;
     public type: string; // Tipo de planta ou recurso coletável
-    public Contrucao;
-    public position: { x: number, y: number, z: number,rx: number, ry: number, rz: number,ex: number, ey: number, ez: number }; // Posição no mapa
+    public Contrucao: string | undefined; // Pode ser undefined
+    public position: { x: number, y: number, z: number, rx: number, ry: number, rz: number, ex: number, ey: number, ez: number }; // Posição no mapa
     public respawnTime: number; // Tempo para a planta renascer
     public isAvailable: boolean; // Se a planta está disponível para coleta
-    public gatherTime: number; // Tempo necessário para coletar
+    public gatherTime: number; 
     public life: number;
     public weight: number; // Peso do recurso coletado
+    private drop: string;
     private map: Mapa; // Referência ao mapa em que a planta está
     private gatherableInfo: any;
 
-    constructor(type: string, position: {x: number, y: number, z: number,rx: number, ry: number, rz: number,ex: number, ey: number, ez: number  }, map: Mapa, id: string,Construcao?:string) {
+    // Construtor com parâmetros corrigidos
+    constructor(
+        type: string, 
+        position: { x: number, y: number, z: number, rx: number, ry: number, rz: number, ex: number, ey: number, ez: number }, 
+        map: Mapa, 
+        id: string, 
+        Construcao?: string // Construção continua sendo opcional
+    ) {
         this.id = id; // ID único
         this.type = type;
         this.position = position;
         this.map = map;
         this.Contrucao = Construcao;
-        
-
+        this.isAvailable = false;
         // Busca os dados do gatherable do JSON com base no tipo
         const gatherableInfo = gatherablesData.gatherables.find(gatherable => gatherable.type === type);
 
@@ -32,20 +39,30 @@ export class Gatherable {
             this.gatherTime = gatherableInfo.gatherTime || 2; // Usa o tempo do JSON ou 2 como padrão
             this.respawnTime = gatherableInfo.respawnTime || 60; // Usa o respawn do JSON ou 60 como padrão
             this.weight = gatherableInfo.weight || 0.1; // Usa o peso do JSON ou 0.1 como padrão
+            this.drop = gatherableInfo.drop || '';
             this.life = gatherableInfo.life || 0;
             this.gatherableInfo = gatherableInfo;
+
+            console.log('drop:',this.drop)
+
+
+
         } else {
             // Se o tipo não for encontrado no JSON, usar valores padrões
             console.error(`Gatherable type "${type}" not found in JSON.`);
-            this.gatherTime = 2;
-            this.respawnTime = 60;
+            this.gatherTime = 0.5;
+            this.respawnTime = 9999999999;
             this.weight = 0.1;
+            this.drop = '';
             this.life = 0;
         }
-        if (this.life > 0){
-        this.isAvailable = true; 
-        }else this.isAvailable = false; 
+
+        if (this.life >= 1) {
+            this.isAvailable = true;
+        }
+        
     }
+
 
 
 
@@ -55,17 +72,17 @@ export class Gatherable {
             console.log("O recurso não está disponível para coleta.");
             return;
         }
-    
-        const item = Baseitem.createItemFromId(this.type);
+        
+        const item = Baseitem.createItemFromId(this.drop);
         console.log(`Vida atual: ${this.life}`);
-    
+        console.log('item:',item)
         if (this.life > 0) {
             this.life--;
     
             if (item) {
                 const iteminfo = JSON.stringify(item);
                 this.addToInventory(socket, iteminfo);
-                console.log(`Jogador ${socket.character.name} coletou ${item.name} na posição (${this.position.x}, ${this.position.y}, ${this.position.z}).`);
+                console.log(`Jogador ${socket.character.name} coletou ${this.drop} na posição (${this.position.x}, ${this.position.y}, ${this.position.z}).`);
                 
                 
     
@@ -121,7 +138,7 @@ export class Gatherable {
         });
 
         // Chama a função adicionaraoinventario com os parâmetros corretos
-        inventario.adicionaraoinventario(this.type, 1, socket.conteinerids, formattedProps, socket);
+        inventario.adicionaraoinventario(this.drop, 1, socket.conteinerids, formattedProps, socket);
     }
 
 }

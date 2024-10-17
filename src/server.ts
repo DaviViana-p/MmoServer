@@ -34,7 +34,7 @@ server.on('connection', (socket: any) => {
     
     let conta: contas | null = null
     QueueBuffer.addSocket(id, socket);
-    let mapaatual:Mapa | undefined;
+    socket.mapaatual;
     console.log(`Player connected ${id}`);
 
     socket.on('message', (data: any) => {
@@ -163,16 +163,16 @@ server.on('connection', (socket: any) => {
 
                         // Pega ou cria o mapa
                         socket.character.gameplayVariables.atualMap.toString();
-                        mapaatual = mapas.get(socket.character.gameplayVariables.atualMap.toString());
-                        if (!mapaatual) {
-                            mapaatual = new Mapa(socket.mapNamespace);
+                        socket.mapaatual = mapas.get(socket.character.gameplayVariables.atualMap.toString());
+                        if (!socket.mapaatual) {
+                            socket.mapaatual = new Mapa(socket.mapNamespace);
                            // mapas.set(mapNamespace, mapa);
                            console.log('mapavazio:',mapa);
                         }else
 
                         console.log('socket.character.nome:',socket.character.name)
                         // Adiciona o jogador ao mapa com a posição correta
-                        mapaatual.addPlayer(socket.character.name, socket);
+                        socket.mapaatual.addPlayer(socket.character.name, socket);
                         DB.getContainerIdsByOwnerId(socket.characterId, (inventory, containerIds) => {
                             if (inventory) {
                                // console.log("Inventário carregado:", inventory);
@@ -255,9 +255,10 @@ server.on('connection', (socket: any) => {
                 const targetid = message.getString();
                 if (targetid != '') {
                     console.log(targetid)
-                    mapaatual?.coletaritem(socket, targetid);    
+                    socket.mapaatual?.coletaritem(socket, targetid);    
                     
                 }
+                console.log('interagindo')
                 
                 
                 break;
@@ -278,7 +279,7 @@ server.on('connection', (socket: any) => {
                     let gatherabletype = message.getString();
                     if(gatherabletype === 'Construcao'){
                         Construcao = message.getString();
-                        console.log(gatherabletype,Construcao)
+                        //console.log(gatherabletype,Construcao)
                     }
                     
                     
@@ -288,9 +289,9 @@ server.on('connection', (socket: any) => {
                     const [x, y, z, rx, ry, rz, ex, ey, ez]: number[] = gathertransform.split(',').map(Number);
                     
                     if (Construcao) {
-                        mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez},Construcao)
+                        socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez},'',Construcao)
                     } else {
-                        mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez})
+                        socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez})
                     }
                     
                 break;

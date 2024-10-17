@@ -38,7 +38,8 @@ class Mapa {
                 gatherableData.type,
                 gatherableData.position, // Usa a posição especificada no JSON de entrada
                 this, // Mapa atual
-                id    // Atribui o id gerado ao gatherable
+                id,
+                '',
             );
         }).filter((gatherable:any): gatherable is Gatherable => gatherable !== null);
         
@@ -177,19 +178,19 @@ class Mapa {
         }
     }
 
-    createGatherable(type: string, position: { x: number, y: number, z: number,rx: number, ry: number, rz: number,ex: number, ey: number, ez: number},Construcao?: string) {
-        // Gera um ID único para o novo gatherable
-        
+    createGatherable(type: string, position: { x: number, y: number, z: number,rx: number, ry: number, rz: number,ex: number, ey: number, ez: number},itemtipo:string,Construcao?: string) {        
 
         const id = uuidv4();
-    
+        if(type === 'item'){
+            type = itemtipo;
+        }
         // Cria um novo objeto Gatherable
         const newGatherable = new Gatherable(
             type,        // Tipo do gatherable (ex: 'tree', 'stone', etc.)
             position,    // Posição no mapa
             this,        // Referência ao mapa atual
-            id,           // ID único
-            Construcao
+            id,         // ID único
+            Construcao     //item tipo vazio
         );
     
         // Adiciona o novo gatherable à lista de gatherables do mapa

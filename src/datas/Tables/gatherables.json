@@ -6,7 +6,8 @@
         "gatherTime": 2,
         "respawnTime": 60,
         "life": 50,
-        "weight": 0.1
+        "weight": 0.1,
+        "drop": "Pedra"
       },
       {
         "type": "Pedra",
@@ -14,7 +15,8 @@
         "gatherTime": 3,
         "respawnTime": 120,
         "life": 10,
-        "weight": 0.2
+        "weight": 0.2,
+        "drop": "Tree"
       },
       {
         "type": "Crystal_Shard",
@@ -22,7 +24,8 @@
         "gatherTime": 5,
         "respawnTime": 300,
         "life": 1,
-        "weight": 0.5
+        "weight": 0.5,
+        "drop": "Pedra"
       },
       {
         "type": "Construcao",
@@ -30,7 +33,17 @@
         "gatherTime": 5,
         "respawnTime": 300,
         "life": 1,
-        "weight": 0.5
+        "weight": 0.5,
+        "drop": "Pedra"
+      },
+      {
+        "type": "item",
+        "description": "Item Dropado.",
+        "gatherTime": 5,
+        "respawnTime": 300,
+        "life": 1,
+        "weight": 0.5,
+        "drop": ""
       }
     ]
   }
