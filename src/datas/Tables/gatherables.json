@@ -7,7 +7,7 @@
         "respawnTime": 60,
         "life": 50,
         "weight": 0.1,
-        "drop": "Pedra"
+        "drop": "Wood"
       },
       {
         "type": "Pedra",
@@ -16,7 +16,7 @@
         "respawnTime": 120,
         "life": 10,
         "weight": 0.2,
-        "drop": "Tree"
+        "drop": "Stone"
       },
       {
         "type": "Crystal_Shard",
@@ -25,7 +25,7 @@
         "respawnTime": 300,
         "life": 1,
         "weight": 0.5,
-        "drop": "Pedra"
+        "drop": "Crystal_Shard"
       },
       {
         "type": "Construcao",

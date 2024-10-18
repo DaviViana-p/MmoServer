@@ -211,7 +211,6 @@ class Mapa {
             length: 1, // Apenas um gatherable foi criado
             gatherables: [gatherableData]
         });
-    
         this.broadcast(packets.spawngatherables(result), '');
     }
     

@@ -1,26 +1,136 @@
 {
-    "itens": [
-      {
-        "type": "Tree",
-        "description": "Arvore Comum.",
-        "gatherTime": 2,
-        "respawnTime": 60,
-        "weight": 0.1
+  "consumable_health_potion": {
+      "id": "item001",
+      "name": "Health Potion",
+      "description": "Restores 50 health over 10 seconds.",
+      "itemType": "Consumable",
+      "rarity": "Common",
+      "weight": 0.1,
+      "value": 25,
+      "stackable": true,
+      "maxStackSize": 10,
+      "icon": "path/to/health_potion.png",
+      "effects": [
+          {
+              "effectType": "HealthRegen",
+              "magnitude": 50,
+              "duration": 10
+          }
+      ]
+  },
+  "equipable_steel_sword": {
+      "id": "item002",
+      "name": "Steel Sword",
+      "description": "A sturdy sword made of steel.",
+      "itemType": "Equipable",
+      "rarity": "Uncommon",
+      "weight": 5,
+      "value": 100,
+      "stackable": false,
+      "maxStackSize": 1,
+      "icon": "path/to/steel_sword.png",
+      "slot": "Weapon",
+      "stats": {
+          "strength": 10,
+          "attackPower": 15,
+          "speed": -1
       },
-      {
-        "type": "Pedra",
-        "description": "Pedra Basica.",
-        "gatherTime": 3,
-        "respawnTime": 120,
-        "weight": 0.2
-      },
-      {
-        "type": "Crystal_Shard",
-        "description": "Um fragmento de cristal imbuído de energia mágica.",
-        "gatherTime": 5,
-        "respawnTime": 300,
-        "weight": 0.5
-      }
-    ]
+      "effects": [
+          {
+              "effectType": "HealthRegen",
+              "magnitude": 50,
+              "duration": 10
+          }
+      ],
+      
+      "durability": 100,
+      "maxDurability": 100,
+      "requiredLevel": 5,
+      "classRestrictions": ["Warrior", "Paladin"]
+  },
+  "crafting_iron_ore": {
+      "id": "item003",
+      "name": "Iron Ore",
+      "description": "A raw material used for crafting weapons and armor.",
+      "itemType": "CraftingMaterial",
+      "rarity": "Common",
+      "weight": 2,
+      "value": 10,
+      "stackable": true,
+      "maxStackSize": 20,
+      "icon": "path/to/iron_ore.png",
+      "usedInRecipes": ["Steel Sword", "Iron Shield"]
+  },
+  "Tree": {
+      "id": "craft001",
+      "name": "Árvore Comum",
+      "description": "Uma árvore comum do ambiente.",
+      "itemType": "CraftingMaterial",
+      "rarity": "Common",
+      "weight": 0.1,
+      "value": 5,
+      "stackable": true,
+      "maxStackSize": 5,
+      "icon": "path/to/tree_icon.png"
+  },
+  "Pedra": {
+      "id": "craft002",
+      "name": "Pedra Básica",
+      "description": "Uma pedra extraída do ambiente.",
+      "itemType": "CraftingMaterial",
+      "rarity": "Common",
+      "weight": 0.2,
+      "value": 8,
+      "stackable": true,
+      "maxStackSize": 30,
+      "icon": "path/to/stone_icon.png"
+  },
+  "Stone": {
+      "id": "craft002",
+      "name": "Pedra Básica",
+      "description": "Uma pedra extraída do ambiente.",
+      "itemType": "CraftingMaterial",
+      "rarity": "Common",
+      "weight": 0.2,
+      "value": 8,
+      "stackable": true,
+      "maxStackSize": 30,
+      "icon": "path/to/stone_icon.png"
+  },
+  "Metal": {
+      "id": "craft002",
+      "name": "Pedra Básica",
+      "description": "Uma pedra extraída do ambiente.",
+      "itemType": "CraftingMaterial",
+      "rarity": "Common",
+      "weight": 0.2,
+      "value": 8,
+      "stackable": true,
+      "maxStackSize": 30,
+      "icon": "path/to/stone_icon.png"
+  },
+  "Wood": {
+      "id": "craft002",
+      "name": "Pedra Básica",
+      "description": "Uma pedra extraída do ambiente.",
+      "itemType": "CraftingMaterial",
+      "rarity": "Common",
+      "weight": 0.2,
+      "value": 8,
+      "stackable": true,
+      "maxStackSize": 30,
+      "icon": "path/to/stone_icon.png"
+  },
+  "Crystal_Shard": {
+      "id": "craft003",
+      "name": "Fragmento de Cristal",
+      "description": "Um fragmento de cristal mágico.",
+      "itemType": "CraftingMaterial",
+      "rarity": "Uncommon",
+      "weight": 0.5,
+      "value": 50,
+      "stackable": true,
+      "maxStackSize": 10,
+      "icon": "path/to/crystal_shard_icon.png"
   }
-  
+}

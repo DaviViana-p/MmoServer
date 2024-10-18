@@ -2,8 +2,8 @@
     "recipes": {
         "equipable_steel_sword": {
             "items": {
-                "Tree": 2,
-                "Pedra": 1
+                "Wood": 2,
+                "Stone": 1
             },
             "output": "equipable_steel_sword"
         },
@@ -16,10 +16,948 @@
         },
         "Wooden_Sword": {
             "items": {
-                "tree": 2,
-                "Pedra": 2
+                "Wood": 2,
+                "Stone": 2
             },
             "output": "wooden_sword"
+        },
+        "Dummy_Foundation": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Foundation"
+        },
+        "Dummy_Foundation_Triangle": {
+            "items": {
+                "Wood": 2,
+                "Pedra": 1
+            },
+            "output": "Dummy_Foundation_Triangle"
+        },
+        "Dummy_Ramp": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Ramp"
+        },
+        "Dummy_Wall": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Wall"
+        },
+        "Dummy_DoorFrame": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_DoorFrame"
+        },
+        "Dummy_WindowFrame": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_WindowFrame"
+        },
+        "Dummy_Fence": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Fence"
+        },
+        "Dummy_Stairs": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Stairs"
+        },
+        "Dummy_Ceiling": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Ceiling"
+        },
+        "Dummy_Ceiling_Triangle": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Ceiling_Triangle"
+        },
+        "Dummy_RoofWall_Left": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_RoofWall_Left"
+        },
+        "Dummy_RoofWall_Right": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_RoofWall_Right"
+        },
+        "Dummy_RoofWall_Top": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_RoofWall_Top"
+        },
+        "Dummy_Roof": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Roof"
+        },
+        "Dummy_Roof_Top": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Roof_Top"
+        },
+        "Dummy_Window": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Window"
+        },
+        "Dummy_Door": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Door"
+        },
+        "Dummy_Campfire": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Campfire"
+        },
+        "Dummy_DoorLock": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_DoorLock"
+        },
+        "Dummy_CodeLock": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_CodeLock"
+        },
+        "Dummy_Torch": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Torch"
+        },
+        "Dummy_Bed": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Dummy_Bed"
+        },
+        "Stylized_Campfire": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Stylized_Campfire"
+        },
+        "Stylized_DoorLock": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Stylized_DoorLock"
+        },
+        "Stylized_CodeLock": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Stylized_CodeLock"
+        },
+        "Stylized_Torch": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Stylized_Torch"
+        },
+        "Stylized_Bed": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Stylized_Bed"
+        },
+        "Stylized_Wooden_Foundation": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Foundation"
+        },
+        "Stylized_Wooden_Foundation_Triangle": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Foundation_Triangle"
+        },
+        "Stylized_Wooden_Ramp": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Ramp"
+        },
+        "Stylized_Wooden_Wall": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Wall"
+        },
+        "Stylized_Wooden_Doorframe": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Doorframe"
+        },
+        "Stylized_Wooden_WindowFrame": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_WindowFrame"
+        },
+        "Stylized_Wooden_Fence": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Fence"
+        },
+        "Stylized_Wooden_Stairs": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Stairs"
+        },
+        "Stylized_Wooden_Ceiling": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Ceiling"
+        },
+        "Stylized_Wooden_Ceiling_Triangle": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Ceiling_Triangle"
+        },
+        "Stylized_Wooden_RoofWall_Left": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_RoofWall_Left"
+        },
+        "Stylized_Wooden_RoofWall_Right": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_RoofWall_Right"
+        },
+        "Stylized_Wooden_RoofWall_Top": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_RoofWall_Top"
+        },
+        "Stylized_Wooden_Roof": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Roof"
+        },
+        "Stylized_Wooden_Roof_Top": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Roof_Top"
+        },
+        "Stylized_Wooden_Window": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Window"
+        },
+        "Stylized_Wooden_Door": {
+            "items": {
+                "Wood": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Wooden_Door"
+        },
+        "Stylized_Stone_Foundation": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Foundation"
+        },
+        "Stylized_Stone_Foundation_Triangle": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Foundation_Triangle"
+        },
+        "Stylized_Stone_Ramp": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Ramp"
+        },
+        "Stylized_Stone_Wall": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Wall"
+        },
+        "Stylized_Stone_Doorframe": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Doorframe"
+        },
+        "Stylized_Stone_WindowFrame": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_WindowFrame"
+        },
+        "Stylized_Stone_Fence": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Fence"
+        },
+        "Stylized_Stone_Stairs": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Stairs"
+        },
+        "Stylized_Stone_Ceiling": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Ceiling"
+        },
+        "Stylized_Stone_Ceiling_Triangle": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Ceiling_Triangle"
+        },
+        "Stylized_Stone_RoofWall_Left": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_RoofWall_Left"
+        },
+        "Stylized_Stone_RoofWall_Right": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_RoofWall_Right"
+        },
+        "Stylized_Stone_RoofWall_Top": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_RoofWall_Top"
+        },
+        "Stylized_Stone_Roof": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Roof"
+        },
+        "Stylized_Stone_Roof_Top": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Roof_Top"
+        },
+        "Stylized_Stone_Window": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Window"
+        },
+        "Stylized_Stone_Door": {
+            "items": {
+                "Stone": 3,
+                "Metal": 1
+            },
+            "output": "Stylized_Stone_Door"
+        },
+        "Stylized_Metal_Foundation": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Foundation"
+        },
+        "Stylized_Metal_Foundation_Triangle": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Foundation_Triangle"
+        },
+        "Stylized_Metal_Ramp": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Ramp"
+        },
+        "Stylized_Metal_Wall": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Wall"
+        },
+        "Stylized_Metal_Doorframe": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Doorframe"
+        },
+        "Stylized_Metal_WindowFrame": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_WindowFrame"
+        },
+        "Stylized_Metal_Fence": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Fence"
+        },
+        "Stylized_Metal_Stairs": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Stairs"
+        },
+        "Stylized_Metal_Ceiling": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Ceiling"
+        },
+        "Stylized_Metal_Ceiling_Triangle": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Ceiling_Triangle"
+        },
+        "Stylized_Metal_RoofWall_Left": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_RoofWall_Left"
+        },
+        "Stylized_Metal_RoofWall_Right": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_RoofWall_Right"
+        },
+        "Stylized_Metal_RoofWall_Top": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_RoofWall_Top"
+        },
+        "Stylized_Metal_Roof": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Roof"
+        },
+        "Stylized_Metal_Roof_Top": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Roof_Top"
+        },
+        "Stylized_Metal_Window": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Window"
+        },
+        "Stylized_Metal_Door": {
+            "items": {
+                "Metal": 3,
+                "Stone": 1
+            },
+            "output": "Stylized_Metal_Door"
+        },
+        "Polygonal_Campfire": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Polygonal_Campfire"
+        },
+        "Polygonal_DoorLock": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Polygonal_DoorLock"
+        },
+        "Polygonal_CodeLock": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Polygonal_CodeLock"
+        },
+        "Polygonal_Torch": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Polygonal_Torch"
+        },
+        "Polygonal_Bed": {
+            "items": {
+                "Wood": 2,
+                "Stone": 1
+            },
+            "output": "Polygonal_Bed"
+        },
+        "Polygonal_Wooden_Foundation": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Foundation"
+        },
+        "Polygonal_Wooden_Foundation_Triangle": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Foundation_Triangle"
+        },
+        "Polygonal_Wooden_Ramp": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Ramp"
+        },
+        "Polygonal_Wooden_Wall": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Wall"
+        },
+        "Polygonal_Wooden_Doorframe": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Doorframe"
+        },
+        "Polygonal_Wooden_WindowFrame": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_WindowFrame"
+        },
+        "Polygonal_Wooden_Fence": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Fence"
+        },
+        "Polygonal_Wooden_Stairs": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Stairs"
+        },
+        "Polygonal_Wooden_Ceiling": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Ceiling"
+        },
+        "Polygonal_Wooden_Ceiling_Triangle": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Ceiling_Triangle"
+        },
+        "Polygonal_Wooden_RoofWall_Left": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_RoofWall_Left"
+        },
+        "Polygonal_Wooden_RoofWall_Right": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_RoofWall_Right"
+        },
+        "Polygonal_Wooden_RoofWall_Top": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_RoofWall_Top"
+        },
+        "Polygonal_Wooden_Roof": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Roof"
+        },
+        "Polygonal_Wooden_Roof_Top": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Roof_Top"
+        },
+        "Polygonal_Wooden_Window": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Window"
+        },
+        "Polygonal_Wooden_Door": {
+            "items": {
+                "Wood": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Wooden_Door"
+        },
+        "Polygonal_Stone_Foundation": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Foundation"
+        },
+        "Polygonal_Stone_Foundation_Triangle": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Foundation_Triangle"
+        },
+        "Polygonal_Stone_Ramp": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Ramp"
+        },
+        "Polygonal_Stone_Wall": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Wall"
+        },
+        "Polygonal_Stone_Doorframe": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Doorframe"
+        },
+        "Polygonal_Stone_WindowFrame": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_WindowFrame"
+        },
+        "Polygonal_Stone_Fence": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Fence"
+        },
+        "Polygonal_Stone_Stairs": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Stairs"
+        },
+        "Polygonal_Stone_Ceiling": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Ceiling"
+        },
+        "Polygonal_Stone_Ceiling_Triangle": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Ceiling_Triangle"
+        },
+        "Polygonal_Stone_RoofWall_Left": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_RoofWall_Left"
+        },
+        "Polygonal_Stone_RoofWall_Right": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_RoofWall_Right"
+        },
+        "Polygonal_Stone_RoofWall_Top": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_RoofWall_Top"
+        },
+        "Polygonal_Stone_Roof": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Roof"
+        },
+        "Polygonal_Stone_Roof_Top": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Roof_Top"
+        },
+        "Polygonal_Stone_Window": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Window"
+        },
+        "Polygonal_Stone_Door": {
+            "items": {
+                "Stone": 4,
+                "Metal": 1
+            },
+            "output": "Polygonal_Stone_Door"
+        },
+        "Polygonal_Metal_Foundation": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Foundation"
+        },
+        "Polygonal_Metal_Foundation_Triangle": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Foundation_Triangle"
+        },
+        "Polygonal_Metal_Ramp": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Ramp"
+        },
+        "Polygonal_Metal_Wall": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Wall"
+        },
+        "Polygonal_Metal_Doorframe": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Doorframe"
+        },
+        "Polygonal_Metal_WindowFrame": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_WindowFrame"
+        },
+        "Polygonal_Metal_Fence": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Fence"
+        },
+        "Polygonal_Metal_Stairs": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Stairs"
+        },
+        "Polygonal_Metal_Ceiling": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Ceiling"
+        },
+        "Polygonal_Metal_Ceiling_Triangle": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Ceiling_Triangle"
+        },
+        "Polygonal_Metal_RoofWall_Left": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_RoofWall_Left"
+        },
+        "Polygonal_Metal_RoofWall_Right": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_RoofWall_Right"
+        },
+        "Polygonal_Metal_RoofWall_Top": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_RoofWall_Top"
+        },
+        "Polygonal_Metal_Roof": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Roof"
+        },
+        "Polygonal_Metal_Roof_Top": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Roof_Top"
+        },
+        "Polygonal_Metal_Window": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Window"
+        },
+        "Polygonal_Metal_Door": {
+            "items": {
+                "Metal": 4,
+                "Stone": 1
+            },
+            "output": "Polygonal_Metal_Door"
         }
     }
 }

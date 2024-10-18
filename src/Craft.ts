@@ -134,14 +134,14 @@ public consumeRequiredItems(socket: any, ingredients: any): boolean {
 
             if (slotId !== null) {
                 inventario.removerstack(idtipo, requiredAmount, socket); // Chama a função removerstack
-                return true; // Sucesso: encontrou o item e removeu a quantidade necessária
+                
             } else {
                 console.log(`Slot ID não encontrado para o item: ${idtipo}`);
                 return false; // Falha: não encontrou o slot ID
             }
         }
     }
-    return false; // Caso a iteração sobre os ingredients termine sem sucesso
+    return true; // Caso a iteração sobre os ingredients termine sem sucesso
 }
 
 

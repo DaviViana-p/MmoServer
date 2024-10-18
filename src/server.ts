@@ -258,12 +258,12 @@ server.on('connection', (socket: any) => {
                 const targetid = message.getString();
                 if (targetid != '') {
                     console.log(targetid)
-                    socket.mapaatual?.coletaritem(socket, targetid);    
+                    socket.mapaatual?.coletaritem(socket, targetid); 
+                    console.log('interagindo')   
                     
-                }
-                console.log('interagindo')
-                
-                
+                }else
+                console.log(targetid)
+                console.log('falhar ao interagir')
                 break;
                 
                 case 8: // Query Inventory
@@ -292,14 +292,20 @@ server.on('connection', (socket: any) => {
                     const [x, y, z, rx, ry, rz, ex, ey, ez]: number[] = gathertransform.split(',').map(Number);
                     
                     if (Construcao) {
-                        const recipe = craftingSystem.getRecipe(Construcao)
+                        const [, item] = Construcao.split(',');
+                        console.log('construção:',item)
+                        const data = craftingSystem.getRecipe(item)
+                        const recipe = data.items;
+
+                        console.log('recipe:',recipe)
                         if(recipe){
                         const has = craftingSystem.hasRequiredItems(socket, recipe)
                             if(has){
                                 const sucesso = craftingSystem.consumeRequiredItems(socket, recipe);
-                                console.log('spawnarconstruçãojatiradocusto');
+                                console.log('has:',has)
                                 if(sucesso){
-                                    socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez},'',Construcao);
+                                    console.log('spawnarconstruçãojatiradocusto');
+                                    socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez},'',item);
                                 }else
                                 console.log('erro ao retirar materias do inventario');
                             }

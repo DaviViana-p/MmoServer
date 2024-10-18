@@ -2,7 +2,7 @@
     "gatherables": [
       {
         "type": "Tree",
-        "position": { "x": -8173, "y": -4231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+        "position": { "x": -8133, "y": -4231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
       },
       {
         "type": "Pedra",
