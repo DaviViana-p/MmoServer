@@ -2,11 +2,31 @@
     "gatherables": [
       {
         "type": "Tree",
-        "position": { "x": -8133, "y": -4231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+        "position": { "x": -8133, "y": -4231, "z": 100,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+      },
+      {
+        "type": "Tree",
+        "position": { "x": -5133, "y": -3231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+      },
+      {
+        "type": "Tree",
+        "position": { "x": -6133, "y": -2231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+      },
+      {
+        "type": "Tree",
+        "position": { "x": -7133, "y": -4231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
       },
       {
         "type": "Pedra",
         "position": { "x": -7250, "y": -5000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+      },
+      {
+        "type": "Pedra",
+        "position": { "x": -2250, "y": -4000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+      },
+      {
+        "type": "Pedra",
+        "position": { "x": -3250, "y": -5000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
       },
       {
         "type": "Crystal_Shard",

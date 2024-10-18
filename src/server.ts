@@ -347,9 +347,9 @@ server.on('connection', (socket: any) => {
             if(socket.character.id)
                  mapa.removePlayer(socket.character.id);
         });*/
-        if(socket.character.name !== null){
-            broadcast(packets.removecharacter(socket.character.name),socket.id)}
-             console.log(`Player disconnected ${socket.id}`);
+        //if(socket.character.name !== null){
+           // broadcast(packets.removecharacter(socket.character.name),socket.id)}
+           //  console.log(`Player disconnected ${socket.id}`);
     });
 
     broadcast(packets.packetCreatePlayer(id), id);
