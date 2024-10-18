@@ -11,6 +11,8 @@ import * as chat from './chat'
 import * as playerentiti from './entities/playerentiti'
 import * as path from 'path';
 import * as fs from 'fs';
+import { craftingSystem } from './Craft';
+
 
 
 
@@ -23,6 +25,7 @@ const port = 3001;
 const clients = new Map<string, any>();
 const server = new WebSocket.Server({ port, host: "0.0.0.0" });
 const mapas = new Map<string, Mapa>(); // Gerenciar diferentes mapas
+
 initializeMaps();
 
 server.on('connection', (socket: any) => {
@@ -158,7 +161,7 @@ server.on('connection', (socket: any) => {
                     
                         
 
-                        console.log(`Character found: ${socket.character.name} at position (${socket.character.gameplayVariables.transform.x})`);
+                        //console.log(`Character found: ${socket.character.name} at position (${socket.character.gameplayVariables.transform.x})`);
                         
 
                         // Pega ou cria o mapa
@@ -170,7 +173,7 @@ server.on('connection', (socket: any) => {
                            console.log('mapavazio:',mapa);
                         }else
 
-                        console.log('socket.character.nome:',socket.character.name)
+                        //console.log('socket.character.nome:',socket.character.name)
                         // Adiciona o jogador ao mapa com a posição correta
                         socket.mapaatual.addPlayer(socket.character.name, socket);
                         DB.getContainerIdsByOwnerId(socket.characterId, (inventory, containerIds) => {
@@ -278,7 +281,7 @@ server.on('connection', (socket: any) => {
                     let Construcao;
                     let gatherabletype = message.getString();
                     if(gatherabletype === 'Construcao'){
-                        Construcao = message.getString();
+                        Construcao = message.getString();            
                         //console.log(gatherabletype,Construcao)
                     }
                     
@@ -289,12 +292,43 @@ server.on('connection', (socket: any) => {
                     const [x, y, z, rx, ry, rz, ex, ey, ez]: number[] = gathertransform.split(',').map(Number);
                     
                     if (Construcao) {
-                        socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez},'',Construcao)
+                        const recipe = craftingSystem.getRecipe(Construcao)
+                        if(recipe){
+                        const has = craftingSystem.hasRequiredItems(socket, recipe)
+                            if(has){
+                                const sucesso = craftingSystem.consumeRequiredItems(socket, recipe);
+                                console.log('spawnarconstruçãojatiradocusto');
+                                if(sucesso){
+                                    socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez},'',Construcao);
+                                }else
+                                console.log('erro ao retirar materias do inventario');
+                            }
+                        }  
                     } else {
-                        socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez})
+                        socket.mapaatual?.createGatherable(gatherabletype,{x,y,z,rx,ry,rz,ex,ey,ez});
                     }
                     
                 break;
+
+                case 11: // Craftar item
+                
+                const itemToCraft = message.getString(); // Obtém o nome do item que o jogador deseja craftar
+                console.log(itemToCraft)
+                if (!itemToCraft) {
+                    console.error("No item specified for crafting.");
+                    //sendPacket(socket, packets.packetCraftingError("No item specified."));
+                    break;
+                }
+            
+                const success = craftingSystem.craftItem(socket, itemToCraft); // Agora `success` é um booleano
+                if (success) {
+                   // sendPacket(socket, packets.packetCraftingSuccess(itemToCraft)); // Sucesso no crafting
+                } else {
+                    //sendPacket(socket, packets.packetCraftingError("Failed to craft item.")); // Falha no crafting
+                }
+                break;
+            
+            
 
 
         }

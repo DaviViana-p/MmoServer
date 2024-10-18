@@ -1,0 +1,25 @@
+{
+    "recipes": {
+        "equipable_steel_sword": {
+            "items": {
+                "Tree": 2,
+                "Pedra": 1
+            },
+            "output": "equipable_steel_sword"
+        },
+        "Health_Potion": {
+            "items": {
+                "crafting_herbs": 3,
+                "crafting_water": 1
+            },
+            "output": "health_potion"
+        },
+        "Wooden_Sword": {
+            "items": {
+                "tree": 2,
+                "Pedra": 2
+            },
+            "output": "wooden_sword"
+        }
+    }
+}

@@ -378,8 +378,14 @@ export function createNewItem(idtipo: string, amount: number, containerId: numbe
 
 export function updateItemAmount(idtipo: string, containerId: number, slotId: number, amountChange: number, callback: (success: boolean) => void) {
     // Primeiro, vamos buscar o item para garantir que ele existe e pegar seu amount atual
+    console.log(`Atualizando a quantidade do item:
+        idtipo: ${idtipo},
+        containerId: ${containerId},
+        slotId: ${slotId},
+        amountChange: ${amountChange}`
+    );
     const selectSql = `SELECT * FROM itens WHERE idtipo = ? AND containerId = ? AND slotId = ?`;
-    
+    console.log('sqlselect:',selectSql)
     db.get(selectSql, [idtipo, containerId, slotId], (err, row: Item | undefined) => { // Aqui definimos row como Item | undefined
         if (err) {
             console.error('Erro ao buscar item:', err.message);

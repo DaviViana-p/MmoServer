@@ -53,7 +53,7 @@ class Mapa {
         this.entities.set(clientId, socket);
        // console.log(`Player ${character.nome} entrou no mapa ${this.namespace}`);
        this.broadcast(packets.spawnproxy(socket.character.name,JSON.stringify(socket.character.gameplayVariables.transform)),socket.character.name);
-        console.log('socket.character.characterinfo:',socket.character.gameplayVariables.transform,socket.character.name);
+        //console.log('socket.character.characterinfo:',socket.character.gameplayVariables.transform,socket.character.name);
        // console.log('clients:',this.clients);
        
     }

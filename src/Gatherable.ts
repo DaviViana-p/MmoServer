@@ -132,13 +132,8 @@ export class Gatherable {
     }
 
     private addToInventory(socket: any, props: string) {
-        // Certifique-se de que as aspas no props estão escapadas corretamente
-        const formattedProps = JSON.stringify({
-            Infos: JSON.parse(props) // Se props já é um JSON, você pode usar diretamente
-        });
-
         // Chama a função adicionaraoinventario com os parâmetros corretos
-        inventario.adicionaraoinventario(this.drop, 1, socket.conteinerids, formattedProps, socket);
+        inventario.adicionaraoinventario(this.drop, 1, socket.conteinerids, props, socket);
     }
 
 }

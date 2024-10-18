@@ -144,7 +144,7 @@ export function createItemFromId(idtipo: string): BaseItem | null {
             case 'Tree':
                 return {
                     id: "craft001",
-                    name: "Árvore Comum",
+                    name: "Árvore Comum22222",
                     description: "Uma árvore comum do ambiente1.",
                     itemType: ItemType.CraftingMaterial,
                     rarity: "Common",
@@ -158,7 +158,7 @@ export function createItemFromId(idtipo: string): BaseItem | null {
             case 'Pedra':
                 return {
                         id: "craft002",
-                        name: "Pedra Básica",
+                        name: "Pedra Básica3333",
                         description: "Uma pedra extraída do ambiente.",
                         itemType: "CraftingMaterial",
                         rarity: "Common",

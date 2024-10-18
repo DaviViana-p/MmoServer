@@ -34,9 +34,9 @@ export function adicionaraoinventario(
                 try {
                     //console.log('Item encontrado:', item.containerId, item.slotId, item.idtipo);
                     const itemProps = JSON.parse(item.props);
-                    
+                    //console.log(itemProps)
                     // Verifica se o item é empilhável e se a quantidade é menor que maxStackSize
-                    if (itemProps.Infos.stackable && item.amount < itemProps.Infos.maxStackSize) {
+                    if (itemProps.stackable && item.amount < itemProps.maxStackSize) {
                         return item.slotId; // Retorna o slot onde o item pode ser atualizado
                     }
                 } catch (error) {
@@ -196,62 +196,105 @@ export function adicionarstack(idtipo: string, amount: number, slotid: number, s
     });
 }
 
-export function removerstack(idtipo: string, amount: number, slotId: number, socket: any) {
-    // Atualiza o amount do item, subtraindo a quantidade
-    DB.updateItemAmount(idtipo, socket.conteinerids, slotId, -amount, (success) => {
-        if (success) {
-            // Verifica se o amount foi atualizado para 0
-            const currentAmount = getItemAmount(idtipo, socket.conteinerids, slotId, socket);
-            if (currentAmount === 0) {
-                // Remove o item do inventário se o amount for 0
-                DB.deleteItem(idtipo, socket.conteinerids, slotId, (deleteSuccess) => {
-                    if (deleteSuccess) {
-                        console.log('Item removido com sucesso do inventário.');
-                        // Atualiza o inventário do jogador e envia o pacote atualizado
-                        DB.getContainerIdsByOwnerId(socket.characterId, (updatedInventory) => {
-                            if (updatedInventory) {
-                                socket.inventory = updatedInventory;
-                                server.sendPacket(socket, packets.packetInventory(socket.inventory, socket.conteinerids));
-                            } else {
-                                console.log('Erro ao atualizar o inventário após remover item.');
-                            }
-                        });
+export function removerstack(idtipo: string, amount: number, socket: any) {
+    // Verifica a quantidade atual do item e o slotId
+    const result = getItemAmount(socket, idtipo);
+
+    // Verifica se o resultado é um objeto com a propriedade 'amount'
+    if (typeof result === 'object' && result !== null && 'amount' in result && 'slotId' in result) {
+        const { amount: currentAmount, slotId,containerId } = result;
+        console.log(`Tentando remover ${amount} de ${idtipo}. Quantidade atual: ${currentAmount}, Slot ID: ${slotId}`);
+
+        // Se currentAmount for menor que amount, ajusta para 0
+        if (currentAmount <= 0) {
+            console.log(`Não há quantidade suficiente de ${idtipo} para remover. Quantidade atual: ${currentAmount}`);
+            return; // Sai da função se não houver quantidade suficiente
+        }
+
+        // Calcula a quantidade a remover, garantindo que não fique negativa
+        const amountToRemove = Math.min(amount, currentAmount);
+
+        // Atualiza o amount do item, subtraindo a quantidade
+        DB.updateItemAmount(idtipo, containerId, slotId, -amountToRemove, (success) => {
+            if (success) {
+                console.log(`Quantidade de ${idtipo} atualizada com sucesso. Removido: ${amountToRemove}.`);
+
+                // Atualiza o inventário local antes de continuar
+                DB.getContainerIdsByOwnerId(socket.characterId, (updatedInventory) => {
+                    if (updatedInventory) {
+                        socket.inventory = updatedInventory; // Sincroniza inventário local
+                        console.log("Inventário atualizado localmente após remoção:", socket.inventory);
+
+                        // Verifica se o amount foi atualizado para 0
+                        const updatedItem = getItemAmount(socket, idtipo);
+
+                        if (typeof updatedItem === 'object' && updatedItem.amount === 0) {
+                            // Remove o item do inventário se o amount for 0
+                            DB.deleteItem(idtipo, containerId, slotId, (deleteSuccess) => {
+                                if (deleteSuccess) {
+                                    console.log('Item removido com sucesso do inventário.');
+
+                                    // Atualiza o inventário do jogador e envia o pacote atualizado
+                                    DB.getContainerIdsByOwnerId(socket.characterId, (finalInventory) => {
+                                        if (finalInventory) {
+                                            socket.inventory = finalInventory;
+                                            server.sendPacket(socket, packets.packetInventory(socket.inventory, socket.conteinerids));
+                                        } else {
+                                            console.log('Erro ao atualizar o inventário após remover item.');
+                                        }
+                                    });
+                                } else {
+                                    console.log('Erro ao remover item do inventário.');
+                                }
+                            });
+                        } else {
+                            console.log('Item atualizado com sucesso no inventário. Novo amount:', updatedItem , 'não encontrado');
+                            
+                            // Atualiza o inventário após a redução do stack
+                            DB.getContainerIdsByOwnerId(socket.characterId, (finalInventory) => {
+                                if (finalInventory) {
+                                    socket.inventory = finalInventory;
+                                    server.sendPacket(socket, packets.packetInventory(socket.inventory, socket.conteinerids));
+                                } else {
+                                    console.log('Erro ao atualizar o inventário após remover stack.');
+                                }
+                            });
+                        }
                     } else {
-                        console.log('Erro ao remover item do inventário.');
+                        console.log('Erro ao atualizar o inventário localmente.');
                     }
                 });
             } else {
-                console.log('Item atualizado com sucesso no inventário.');
-                // Atualiza o inventário após a redução do stack
-                DB.getContainerIdsByOwnerId(socket.characterId, (updatedInventory) => {
-                    if (updatedInventory) {
-                        socket.inventory = updatedInventory;
-                        server.sendPacket(socket, packets.packetInventory(socket.inventory, socket.conteinerids));
-                    } else {
-                        console.log('Erro ao atualizar o inventário após remover stack.');
-                    }
-                });
+                console.log('Erro ao remover stack do inventário. Verifique os logs anteriores para mais detalhes.');
             }
-        } else {
-            console.log('Erro ao remover stack do inventário.');
-        }
-    });
-}
-
-
-export function getItemAmount(idtipo: string, containerId: number, slotId: number, socket: any): number | null {
-    const inventory = socket.inventory;
-
-    // Procura o item no inventário do socket
-    const item = inventory.find((i: any) => i.idtipo === idtipo && i.containerId === containerId && i.slotId === slotId);
-
-    if (item) {
-        return item.amount; // Retorna a quantidade de itens encontrados
+        });
     } else {
-        console.log(`Item com idtipo ${idtipo}, containerId ${containerId}, e slotId ${slotId} não encontrado no inventário.`);
-        return null; // Retorna null se o item não for encontrado
+        console.log(`Item com idtipo '${idtipo}' não encontrado no inventário.`);
     }
 }
+
+
+
+export function getItemAmount(socket: any, idtipo: string): { amount: number, slotId: number, containerId: number } | number {
+    // Itera sobre os IDs dos contêineres que o socket possui
+    for (const containerId of socket.conteinerids) {
+        for (let slot = 0; slot < 12; slot++) { // Considerando que há 12 slots por contêiner
+            const item = socket.inventory.find((i: any) => 
+                i.containerId === containerId && i.slotId === slot && i.idtipo === idtipo
+            );
+
+            if (item) {
+                return { amount: item.amount, slotId: item.slotId, containerId }; // Retorna amount, slotId e containerId
+            }
+        }
+    }
+
+    console.log(`Item com idtipo '${idtipo}' não encontrado no inventário.`);
+    return 0; // Retorna 0 se o item não for encontrado
+}
+
+
+
 
 
 /*export function dropar(idtipo: string, amount: number, containerId: number, slotId: number, socket: any) {
