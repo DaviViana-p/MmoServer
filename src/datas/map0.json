@@ -1,28 +1,87 @@
 {
-    "gatherables": [
-      {
-        "type": "Tree",
-        "position": { "x": -8173, "y": -4231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+  "gatherables": [
+    {
+      "type": "Tree",
+      "position": { "x": -8133, "y": -4231, "z": 100,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    },
+    {
+      "type": "Tree",
+      "position": { "x": -5133, "y": -3231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    },
+    {
+      "type": "Tree",
+      "position": { "x": -6133, "y": -2231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    },
+    {
+      "type": "Tree",
+      "position": { "x": -7133, "y": -4231, "z": 141,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    },
+    {
+      "type": "Pedra",
+      "position": { "x": -7250, "y": -5000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    },
+    {
+      "type": "Pedra",
+      "position": { "x": -2250, "y": -4000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    },
+    {
+      "type": "Pedra",
+      "position": { "x": -3250, "y": -5000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    },
+    {
+      "type": "Crystal_Shard",
+      "position": { "x": -7250, "y": -5000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": 1, "ey": 1, "ez": 1 }
+    }
+  ],"Mob": [
+    {
+      "name": "Orc",
+      "transform": {
+          "x": 10,
+          "y": 20,
+          "z": 5,
+          "xr": 0,
+          "yr": 0,
+          "zr": 0,
+          "ex": 1,
+          "ey": 1,
+          "ez": 1
       },
-      {
-        "type": "Pedra",
-        "position": { "x": -7250, "y": -5000, "z": 120,"rx": 0, "ry": 0, "rz": 0,"ex": -8173, "ey": 1, "ez": 1 }
-      },
-      {
-        "type": "Crystal_Shard",
-        "position": { "x": -6000, "y": -3000, "z": 200,"rx": 0, "ry": 0, "rz": 0,"ex": -8173, "ey": 1, "ez": 1 }
-      }
-    ],
-    "npcs": [
-        {
-          "id": "npc1",
-          "position": { "x": -8000, "y": -4500, "z": 100,"rx": 0, "ry": 0, "rz": 0,"ex": -8173, "ey": 1, "ez": 1 }
-        }
-    ],
-    "respawns": [
-        {
-          "id": "respawn1",
-          "position": { "x": -7500, "y": -4800, "z": 130,"rx": 0, "ry": 0, "rz": 0,"ex": -8173, "ey": 1, "ez": 1 }
-        }
+      "health": 100,
+      "attackPower": 15,
+      "patrolPoints": [
+          { "x": 5, "y": 10, "z": 0 },
+          {"x":-925,"y":1105,"z":-234},
+          { "x": 5, "y": 10, "z": 0 },
+          {"x":-1564,"y":2798,"z":-296}
+      ]
+  },
+  {
+    "name": "Goblin",
+    "transform": {
+        "x": 10,
+        "y": 20,
+        "z": 5,
+        "xr": 0,
+        "yr": 0,
+        "zr": 0,
+        "ex": 1,
+        "ey": 1,
+        "ez": 1
+    },
+    "health": 100,
+    "attackPower": 15,
+    "patrolPoints": [
+        { "x": 5, "y": 10, "z": 0 },
+        { "x":-8273,"y":-4452,"z":148 },
+        {"x":-925,"y":1105,"z":-234},
+        {"x":-1564,"y":2798,"z":-296}
     ]
+}
+  ],
+  "respawns": [
+      {
+          "type": "monster",
+          "position": { "x": 15, "y": 20, "z": 0 }
+      }
+  ]
 }

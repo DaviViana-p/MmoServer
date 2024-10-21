@@ -3,49 +3,60 @@ import { ByteBuffer } from "./lib/bytebuffer";
 import { QueueBuffer } from "./lib/queuebuffer";
 import * as packets from './packets';
 import { updateCharacterInfo, updateCharacterMapId } from './DB/db.connect';
-import * as inventario from './inventario'
+import * as inventario from './inventario';
 import { Gatherable } from './Gatherable';
+import { Mob } from './entities/Mob'; // Certifique-se de importar a classe Mob
 import { sendPacket } from './server';
-
 
 class Mapa {
     public id: string;
     public namespace: string; // Nome único do mapa
     public entities: Map<string, any>; // Armazena entidades (jogadores e NPCs)
-    private gatherables: Gatherable []; // Adicione o tipo apropriado
-    private npcs: any; // Adicione o tipo apropriado
-    private respawns: any; // Adicione o tipo apropriado
+    private gatherables: Gatherable[]; // Gatherables
+    private mobs: Mob[]; // Mobs
+    private respawns: any[]; // Respawns
     private tickInterval: NodeJS.Timeout | null = null; // Timer para ticks
 
-    constructor(namespace: string, options?: { gatherables?: any; npcs?: any; respawns?: any }) {
+    constructor(namespace: string, options?: { gatherables?: any; Mob?: any; respawns?: any }) {
         this.id = uuidv4(); // ID único para o mapa
         this.namespace = namespace;
         this.entities = new Map<string, any>(); // Entidades no mapa (jogadores, NPCs)
-        this.npcs = options?.npcs || [];
-        this.respawns = options?.respawns || [];
+
+        // Inicializar mobs carregados do JSON
+        this.mobs = options?.Mob?.map((mobData: any) => {
+            // Gerar um id único para cada mob
+            const id = uuidv4();
+            return new Mob(
+                mobData.name,
+                mobData.transform, // Usa a posição especificada no JSON de entrada
+                this,             // Referência ao mapa atual
+                id,               // ID único do mob
+                mobData.health,
+                mobData.attackPower,
+                mobData.patrolPoints // Pontos de patrulha do mob
+            );
+        }) || [];
+
+        // Inicializar gatherables carregados do JSON
         this.gatherables = options?.gatherables?.map((gatherableData: Gatherable) => {
-            // Verifique se gatherableData está definido e possui as propriedades necessárias
             if (!gatherableData || !gatherableData.type || !gatherableData.position) {
                 console.error('Gatherable data is invalid:', gatherableData);
-                return null; // Retorna null para dados inválidos
+                return null;
             }
-            
-            // Gerar um id único para cada gatherable
             const id = uuidv4();
-            //console.log(gatherableData.position)
-            
             return new Gatherable(
                 gatherableData.type,
-                gatherableData.position, // Usa a posição especificada no JSON de entrada
-                this, // Mapa atual
+                gatherableData.position,
+                this,
                 id,
-                '',
+                ''
             );
-        }).filter((gatherable:any): gatherable is Gatherable => gatherable !== null);
-        
-        
+        }).filter((gatherable: any): gatherable is Gatherable => gatherable !== null);
+
+        this.respawns = options?.respawns || [];
+
         // Inicia o intervalo de ticks
-        this.startTick()
+        this.startTick();
     }
 
     // Adiciona um jogador no mapa
@@ -253,6 +264,7 @@ class Mapa {
         return Array.from(this.entities.values());
     }
 
+    
     private startTick() {
         this.tickInterval = setInterval(() => {
             this.onTick();
@@ -265,7 +277,7 @@ class Mapa {
         // Exemplo: Atualizar estados dos personagens ou verificar respawns
       //console.log(this.namespace,this.getPlayers())
       //this.sendgatherables();
-      //console.log(this.gatherables)
+      //console.log(this.mobs)
       this.sendgatherables();
     }
 }

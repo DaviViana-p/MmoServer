@@ -408,13 +408,13 @@ function initializeMaps() {
 
                 // Extrair gatherables, npcs e respawns do JSON
                 const gatherables = mapData.gatherables || [];
-                const npcs = mapData.npcs || [];
+                const Mob = mapData.Mob || [];
                 const respawns = mapData.respawns || [];
 
                 // Passa os gatherables diretamente para o construtor do Mapa
                 const mapa = new Mapa(mapNamespace, {
                     gatherables, // Passa os gatherables extraídos do JSON
-                    npcs,
+                    Mob,
                     respawns,
                 });
                 

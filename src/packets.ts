@@ -171,8 +171,40 @@ export function removegatherable(gatherableid: string): ByteBuffer {
     let buffer = new ByteBuffer();
     buffer.putByte(12); 
     buffer.putString(gatherableid)
-    //console.log('gatherableInfo:',gatherableInfo)
+    return buffer;
+}
 
+export function mobMove(id: string,position:any): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(13); 
+    buffer.putString(id)
+    buffer.putString(JSON.stringify(position))
+    console.log(id,position)
+    return buffer;
+}
+
+export function removeMob(id: string): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(14); 
+    buffer.putString(id)
+    return buffer;
+}
+
+export function MobAttackPlayer(id: string,atackindex:number ,socket:any): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(15); 
+    buffer.putString(id)
+    buffer.putInt32(atackindex)
+    buffer.putString(socket.character.name)
+    return buffer;
+}
+
+export function SpawnMobs(id: string,atackindex:number ,socket:any): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(16); 
+    buffer.putString(id)
+    buffer.putInt32(atackindex)
+    buffer.putString(socket.character.name)
     return buffer;
 }
 
