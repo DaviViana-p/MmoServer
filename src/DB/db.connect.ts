@@ -88,68 +88,95 @@ export function loadCharacter(accountId: string, callback: (character: character
 export function createCharacter(accountId: number, playerName: string, initialLevel: number, callback: (character: characters | null) => void) {
     // Criando a estrutura de characterinfo com dados detalhados
     const characterInfoJson:string = `{
-        "name": "${playerName}",
-        "aparence": "Cavaleiro",
-        "status": {
-            "forca": 5,
-            "destreza": 5,
-            "vitalidade": 5,
-            "magia": 5
-        },
-        "tags": ["Novato", "Tester"],
-        "gameplayVariables": {
-            "transform": { 
-                "x": 0, "y": 0, "z": 0, 
-                "xr": 0, "yr": 0, "zr": 0, 
-                "ex": 1, "ey": 1, "er": 1 
+            "name": "${playerName}",
+            "aparence": "Cavaleiro",
+            "status": {
+                "forca": 5,
+                "destreza": 5,
+                "vitalidade": 5,
+                "magia": 5
             },
-            "velocity": { "x": 1, "y": 1, "z": 1 },
-            "atualMap": "1",
-            "containers": { "container1": ["item1", "item2"] }
-        },
-        "conjuracao": {
-            "magiaSagrada": 0,
-            "magiaDeAgua": 0,
-            "magiaDeFogo": 0,
-            "magiaDeAr": 0,
-            "necromancia": 0,
-            "cura": 0,
-            "metamagia": 0
-        },
-        "especializacaoCombate": {
-            "guerreiro": 0,
-            "mago": 0,
-            "sacerdote": 0,
-            "assassino": 0
-        },
-        "habilidades": ["criarchama", "criaragua"],
-        "magias": { "fireball": 2, "waterball": 3 },
-        "profissoes": {
-            "pescador": 0,
-            "pintor": 0,
-            "bardo": 0,
-            "dancarino": 0,
-            "cozinheiro": 0,
-            "herbalista": 0,
-            "mestreDasBestas": 0,
-            "alfaiate": 0,
-            "construtor": 0,
-            "alquimista": 0,
-            "comerciante": 0
-        },
-        "equipamentos": {
-        "elmo": "Iron Helmet",
-        "peitoral": "Iron Chestplate",
-        "calca": "Iron Pants",
-        "bota": "Iron Boots",
-        "aneis": "Gold Ring",
-        "capa": "Red Cloak",
-        "colar": "Silver Necklace",
-        "amuleto": "Mystic Amulet"
-    },
-        "quests": { "Iniciando no Mundo": "completa", "Primeiros Passos": "incompleta" },
-        "craftsMemorizados": { "picareta": "picareta grande", "mesa": "mesa normal" }
-    }`;
+            "tags": ["Novato", "Tester"],
+            "gameplayVariables": {
+                "transform": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "xr": 0,
+                "yr": 0,
+                "zr": 0,
+                "ex": 1,
+                "ey": 1,
+                "er": 1
+                },
+                "velocity": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+                },
+                "atualMap": "1",
+                "containers": {
+                "container1": ["item1", "item2"]
+                }
+            },
+            "isAlive": true,
+            "vidaActual": 100,
+            "vidaMaxima": 100,
+            "manaActual": 100,
+            "manaMaxima": 100
+            ,
+            "conjuracao": {
+                "magiaSagrada": 0,
+                "magiaDeAgua": 0,
+                "magiaDeFogo": 0,
+                "magiaDeAr": 0,
+                "necromancia": 0,
+                "cura": 0,
+                "metamagia": 0
+            },
+            "especializacaoCombate": {
+                "guerreiro": 0,
+                "mago": 0,
+                "sacerdote": 0,
+                "assassino": 0
+            },
+            "habilidades": ["criarchama", "criaragua"],
+            "magias": {
+                "fireball": 2,
+                "waterball": 3
+            },
+            "profissoes": {
+                "pescador": 0,
+                "pintor": 0,
+                "bardo": 0,
+                "dancarino": 0,
+                "cozinheiro": 0,
+                "herbalista": 0,
+                "mestreDasBestas": 0,
+                "alfaiate": 0,
+                "construtor": 0,
+                "alquimista": 0,
+                "comerciante": 0
+            },
+            "equipamentos": {
+                "elmo": "Iron Helmet",
+                "peitoral": "Iron Chestplate",
+                "calca": "Iron Pants",
+                "bota": "Iron Boots",
+                "aneis": "Gold Ring",
+                "capa": "Red Cloak",
+                "colar": "Silver Necklace",
+                "amuleto": "Mystic Amulet"
+            },
+            "quests": {
+                "Iniciando no Mundo": "completa",
+                "Primeiros Passos": "incompleta"
+            },
+            "craftsMemorizados": {
+                "picareta": "picareta grande",
+                "mesa": "mesa normal"
+            }
+            }`;
 
     const newCharacter: characters = {
         id: 0,  // O banco de dados autoincrementará este campo

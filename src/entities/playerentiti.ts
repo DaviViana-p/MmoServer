@@ -1,297 +1,246 @@
-export class PlayerEntity {
-    private name: string;
-    private aparence: string;
-    private status: {
-        forca: number;
-        destreza: number;
-        vitalidade: number;
-        magia: number;
-    };
-    private tags: string[];
-    private gameplayVariables: {
+import { Mapa } from '../maps';
+import * as packets from '../packets';
+import { Entity } from './entity';
+
+export class PlayerEntity extends Entity {
+    socket: any;
+  private equipamentos: {
+    elmo: string;
+    peitoral: string;
+    calca: string;
+    bota: string;
+    aneis: string;
+    capa: string;
+    colar: string;
+    amuleto: string;
+  };
+  private especializacaoCombate: {
+    guerreiro: number;
+    mago: number;
+    sacerdote: number;
+    assassino: number;
+  };
+  private profissoes: {
+    pescador: number;
+    pintor: number;
+    bardo: number;
+    dancarino: number;
+    cozinheiro: number;
+    herbalista: number;
+    mestreDasBestas: number;
+    alfaiate: number;
+    construtor: number;
+    alquimista: number;
+    comerciante: number;
+  };
+  private tags: string[];
+  private conjuracao: {
+    magiaSagrada: number;
+    magiaDeAgua: number;
+    magiaDeFogo: number;
+    magiaDeAr: number;
+    necromancia: number;
+    cura: number;
+    metamagia: number;
+  };
+
+  constructor(characterJson: {
+    mapa: Mapa;
+    x: number;
+    y: number;
+    z: number;
+    name: string;
+    aparence: string;
+    gameplayVariables: {
         transform: {
-            x: number, y: number, z: number,
-            xr: number, yr: number, zr: number,
-            ex: number, ey: number, er: number
+          x: number;
+          y: number;
+          z: number;
+          xr: number;
+          yr: number;
+          zr: number;
+          ex: number;
+          ey: number;
+          er: number;
         };
-        velocity: { x: number, y: number, z: number };
-        atualMap: string;
-        containers: { [containerId: string]: string[] };
-    };
-
-    private conjuracao: {
-        magiaSagrada: number;
-        magiaDeAgua: number;
-        magiaDeFogo: number;
-        magiaDeAr: number;
-        necromancia: number;
-        cura: number;
-        metamagia: number;
-    };
-    private especializacaoCombate: {
-        guerreiro: number;
-        mago: number;
-        sacerdote: number;
-        assassino: number;
-    };
-    private habilidades: string[];
-    private magias: { [magia: string]: number };
-    private profissoes: {
-        pescador: number;
-        pintor: number;
-        bardo: number;
-        dancarino: number;
-        cozinheiro: number;
-        herbalista: number;
-        mestreDasBestas: number;
-        alfaiate: number;
-        construtor: number;
-        alquimista: number;
-        comerciante: number;
-    };
-    private equipamentos: {
-        elmo: string;
-        peitoral: string;
-        calca: string;
-        bota: string;
-        aneis: string;
-        capa: string;
-        colar: string;
-        amuleto: string;
-    };
-    private quests: { [questName: string]: string };
-    private craftsMemorizados: { [craftName: string]: string };
-
-    constructor(jsonString: string) {
-        const data = JSON.parse(jsonString);
-        this.name = data.name;
-        this.aparence = data.aparence;
-        this.status = data.status;
-        this.tags = data.tags;
-        this.gameplayVariables = data.gameplayVariables;
-        this.gameplayVariables = data.gameplayVariables;
-        this.conjuracao = data.conjuracao;
-        this.especializacaoCombate = data.especializacaoCombate;
-        this.habilidades = data.habilidades;
-        this.magias = data.magias;
-        this.profissoes = data.profissoes;
-        this.equipamentos = data.equipamentos;
-        this.quests = data.quests;
-        this.craftsMemorizados = data.craftsMemorizados;
-    }
-
-    // Getters
-    getName(): string {
-        return this.name;
-    }
-
-    getAparence(): string {
-        return this.aparence;
-    }
-
-    getStatus(): { forca: number; destreza: number; vitalidade: number; magia: number } {
-        return this.status;
-    }
-
-    getTags(): string[] {
-        return this.tags;
-    }
-
-    getTransform(): { x: number, y: number, z: number, xr: number, yr: number, zr: number, ex: number, ey: number, er: number } {
-        return this.gameplayVariables.transform;
-    }
-
-    getGameplayVariables(): {
-        transform: { x: number, y: number, z: number };
-        velocity: { x: number, y: number, z: number };
-        atualMap: string;
-        containers: { [containerId: string]: string[] };
-    } {
-        return this.gameplayVariables;
-    }
-
-    getConjuracao(): {
-        magiaSagrada: number;
-        magiaDeAgua: number;
-        magiaDeFogo: number;
-        magiaDeAr: number;
-        necromancia: number;
-        cura: number;
-        metamagia: number;
-    } {
-        return this.conjuracao;
-    }
-
-    getEspecializacaoCombate(): {
-        guerreiro: number;
-        mago: number;
-        sacerdote: number;
-        assassino: number;
-    } {
-        return this.especializacaoCombate;
-    }
-
-    getHabilidades(): string[] {
-        return this.habilidades;
-    }
-
-    getMagias(): { [magia: string]: number } {
-        return this.magias;
-    }
-
-    getProfissoes(): {
-        pescador: number;
-        pintor: number;
-        bardo: number;
-        dancarino: number;
-        cozinheiro: number;
-        herbalista: number;
-        mestreDasBestas: number;
-        alfaiate: number;
-        construtor: number;
-        alquimista: number;
-        comerciante: number;
-    } {
-        return this.profissoes;
-    }
-
-    getEquipamentos(): {
-        elmo: string;
-        peitoral: string;
-        calca: string;
-        bota: string;
-        aneis: string;
-        capa: string;
-        colar: string;
-        amuleto: string;
-    } {
-        return this.equipamentos;
-    }
-
-    getQuests(): { [questName: string]: string } {
-        return this.quests;
-    }
-
-    getCraftsMemorizados(): { [craftName: string]: string } {
-        return this.craftsMemorizados;
-    }
-
-    // Setters
-    setName(name: string): void {
-        this.name = name;
-    }
-
-    setAparence(aparence: string): void {
-        this.aparence = aparence;
-    }
-
-    setStatus(status: { forca: number; destreza: number; vitalidade: number; magia: number }): void {
-        this.status = status;
-    }
-
-    setTags(tags: string[]): void {
-        this.tags = tags;
-    }
-
-
-    setTransform(x: number, y: number, z: number, xr: number, yr: number, zr: number, ex: number, ey: number, er: number): void {
-        this.gameplayVariables.transform = { x, y, z, xr, yr, zr, ex, ey, er };
-    }
-
-    setPosition(x: number, y: number, z: number): void {
-        this.gameplayVariables.transform.x = x;
-        this.gameplayVariables.transform.y = y;
-        this.gameplayVariables.transform.z = z;
-    }
-
-    setRotation(xr: number, yr: number, zr: number): void {
-        this.gameplayVariables.transform.xr = xr;
-        this.gameplayVariables.transform.yr = yr;
-        this.gameplayVariables.transform.zr = zr;
-    }
-
-    seteEscale(ex: number, ey: number, er: number): void {
-        this.gameplayVariables.transform.ex = ex;
-        this.gameplayVariables.transform.ey = ey;
-        this.gameplayVariables.transform.er = er;
-    }
-    setGameplayVariables(gameplayVariables: {
-        transform: { 
-            x: number, y: number, z: number, 
-            xr: number, yr: number, zr: number, 
-            ex: number, ey: number, er: number 
+        velocity: {
+          x: number;
+          y: number;
+          z: number;
         };
-        velocity: { x: number, y: number, z: number };
-        atualMap: string;
-        containers: { [containerId: string]: string[] };
-    }): void {
-        this.gameplayVariables = gameplayVariables;
-    }
-    
+        atualMap: any;
+        containers: { [containerId: string]: string[] }};
+    isAlive: boolean;
+    vidaActual: number;
+    vidaMaxima: number;
+    manaActual: number;
+    manaMaxima: number;
+    id: string;
+    equipamentos: {
+      elmo: string;
+      peitoral: string;
+      calca: string;
+      bota: string;
+      aneis: string;
+      capa: string;
+      colar: string;
+      amuleto: string;
+    };
+    especializacaoCombate: {
+      guerreiro: number;
+      mago: number;
+      sacerdote: number;
+      assassino: number;
+    };
+    profissoes: {
+      pescador: number;
+      pintor: number;
+      bardo: number;
+      dancarino: number;
+      cozinheiro: number;
+      herbalista: number;
+      mestreDasBestas: number;
+      alfaiate: number;
+      construtor: number;
+      alquimista: number;
+      comerciante: number;
+    };
+    tags: string[];
+    conjuracao: {
+      magiaSagrada: number;
+      magiaDeAgua: number;
+      magiaDeFogo: number;
+      magiaDeAr: number;
+      necromancia: number;
+      cura: number;
+      metamagia: number;
+    };
+  }, socket: any) {
+    super(
+      characterJson.mapa,
+      characterJson.name,
+      characterJson.aparence,
+      characterJson.gameplayVariables,
+      characterJson.isAlive,
+      characterJson.vidaActual,
+      characterJson.vidaMaxima,
+      characterJson.manaActual,
+      characterJson.manaMaxima,
+      characterJson.id);
+    this.equipamentos = characterJson.equipamentos;
+    this.especializacaoCombate = characterJson.especializacaoCombate;
+    this.profissoes = characterJson.profissoes;
+    this.tags = characterJson.tags;
+    this.conjuracao = characterJson.conjuracao;
+  }
 
-    setConjuracao(conjuracao: {
-        magiaSagrada: number;
-        magiaDeAgua: number;
-        magiaDeFogo: number;
-        magiaDeAr: number;
-        necromancia: number;
-        cura: number;
-        metamagia: number;
-    }): void {
-        this.conjuracao = conjuracao;
-    }
 
-    setEspecializacaoCombate(especializacaoCombate: {
-        guerreiro: number;
-        mago: number;
-        sacerdote: number;
-        assassino: number;
-    }): void {
-        this.especializacaoCombate = especializacaoCombate;
-    }
+    // Getters e Setters
+  getEquipamentos(): {
+    elmo: string;
+    peitoral: string;
+    calca: string;
+    bota: string;
+    aneis: string;
+    capa: string;
+    colar: string;
+    amuleto: string;
+  } {
+    return this.equipamentos;
+  }
 
-    setHabilidades(habilidades: string[]): void {
-        this.habilidades = habilidades;
-    }
+  setEquipamentos(equipamentos: {
+    elmo: string;
+    peitoral: string;
+    calca: string;
+    bota: string;
+    aneis: string;
+    capa: string;
+    colar: string;
+    amuleto: string;
+  }) {
+    this.equipamentos = equipamentos;
+  }
 
-    setMagias(magias: { [magia: string]: number }): void {
-        this.magias = magias;
-    }
+  getEspecializacaoCombate(): {
+    guerreiro: number;
+    mago: number;
+    sacerdote: number;
+    assassino: number;
+  } {
+    return this.especializacaoCombate;
+  }
 
-    setProfissoes(profissoes: {
-        pescador: number;
-        pintor: number;
-        bardo: number;
-        dancarino: number;
-        cozinheiro: number;
-        herbalista: number;
-        mestreDasBestas: number;
-        alfaiate: number;
-        construtor: number;
-        alquimista: number;
-        comerciante: number;
-    }): void {
-        this.profissoes = profissoes;
-    }
+  setEspecializacaoCombate(especializacaoCombate: {
+    guerreiro: number;
+    mago: number;
+    sacerdote: number;
+    assassino: number;
+  }) {
+    this.especializacaoCombate = especializacaoCombate;
+  }
 
-    setEquipamentos(equipamentos: {
-        elmo: string;
-        peitoral: string;
-        calca: string;
-        bota: string;
-        aneis: string;
-        capa: string;
-        colar: string;
-        amuleto: string;
-    }): void {
-        this.equipamentos = equipamentos;
-    }
+  getProfissoes(): {
+    pescador: number;
+    pintor: number;
+    bardo: number;
+    dancarino: number;
+    cozinheiro: number;
+    herbalista: number;
+    mestreDasBestas: number;
+    alfaiate: number;
+    construtor: number;
+    alquimista: number;
+    comerciante: number;
+  } {
+    return this.profissoes;
+  }
 
-    setQuests(quests: { [questName: string]: string }): void {
-        this.quests = quests;
-    }
+  setProfissoes(profissoes: {
+    pescador: number;
+    pintor: number;
+    bardo: number;
+    dancarino: number;
+    cozinheiro: number;
+    herbalista: number;
+    mestreDasBestas: number;
+    alfaiate: number;
+    construtor: number;
+    alquimista: number;
+    comerciante: number;
+  }) {
+    this.profissoes = profissoes;
+  }
 
-    setCraftsMemorizados(craftsMemorizados: { [craftName: string]: string }): void {
-        this.craftsMemorizados = craftsMemorizados;
-    }
+  getTags(): string[] {
+    return this.tags;
+  }
+
+  setTags(tags: string[]) {
+    this.tags = tags;
+  }
+
+  getConjuracao(): {
+    magiaSagrada: number;
+    magiaDeAgua: number;
+    magiaDeFogo: number;
+    magiaDeAr: number;
+    necromancia: number;
+    cura: number;
+    metamagia: number;
+  } {
+    return this.conjuracao;
+  }
+
+  setConjuracao(conjuracao: {
+    magiaSagrada: number;
+    magiaDeAgua: number;
+    magiaDeFogo: number;
+    magiaDeAr: number;
+    necromancia: number;
+    cura: number;
+    metamagia: number;
+  }) {
+    this.conjuracao = conjuracao;
+  }
 }

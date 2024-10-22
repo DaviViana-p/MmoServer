@@ -28,11 +28,15 @@ class Mapa {
             const id = uuidv4();
             return new Mob(
                 mobData.name,
-                mobData.transform, // Usa a posição especificada no JSON de entrada
+                mobData.aparence,
+                mobData.gameplayVariables, // Usa a posição especificada no JSON de entrada
                 this,             // Referência ao mapa atual
                 id,               // ID único do mob
-                mobData.health,
                 mobData.attackPower,
+                100,
+                100,
+                100,
+                100,
                 mobData.patrolPoints // Pontos de patrulha do mob
             );
         }) || [];
@@ -111,7 +115,7 @@ class Mapa {
             socket.character.gameplayVariables.transform.z = z; // Define a nova posição z
     
             // Converte o objeto de volta para uma string JSON
-            const newCharacterInfo = JSON.stringify(socket.character);
+            const newCharacterInfo = JSON.stringify({ ...socket.character, socket: undefined });
             
             updateCharacterInfo(socket.characterId, newCharacterInfo, (success) => {
                 if (success) {
@@ -261,7 +265,7 @@ class Mapa {
     
 
     getPlayers() {
-        return Array.from(this.entities.values());
+        return this.entities;
     }
 
     

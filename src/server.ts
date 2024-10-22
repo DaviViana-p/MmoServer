@@ -156,7 +156,7 @@ server.on('connection', (socket: any) => {
                     if (fetchedCharacter) {                        
                         const characterJsonString =(fetchedCharacter.characterinfo);
                         console.log(characterJsonString);
-                        socket.character = new playerentiti.PlayerEntity(characterJsonString);
+                        socket.character = new playerentiti.PlayerEntity(JSON.parse(characterJsonString),socket);
                         console.log(socket.character);
                     
                         
@@ -176,6 +176,7 @@ server.on('connection', (socket: any) => {
                         //console.log('socket.character.nome:',socket.character.name)
                         // Adiciona o jogador ao mapa com a posição correta
                         socket.mapaatual.addPlayer(socket.character.name, socket);
+                        
                         DB.getContainerIdsByOwnerId(socket.characterId, (inventory, containerIds) => {
                             if (inventory) {
                                // console.log("Inventário carregado:", inventory);

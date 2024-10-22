@@ -96,7 +96,9 @@ export function entrarnomundo(mapNamespace:string, socket:any): ByteBuffer {
     buffer.putString(socket.character.gameplayVariables.atualMap.toString());
     buffer.putInt32(socket.characterId);
     buffer.putString(socket.character.name);
-    buffer.putString(JSON.stringify(socket.character));
+    const characterInfoCopy = { ...socket.characterInfo };
+    delete characterInfoCopy.timeout;
+    buffer.putString(JSON.stringify(characterInfoCopy));
     console.log(socket.accountID)
     return buffer;
 }
@@ -179,7 +181,7 @@ export function mobMove(id: string,position:any): ByteBuffer {
     buffer.putByte(13); 
     buffer.putString(id)
     buffer.putString(JSON.stringify(position))
-    console.log(id,position)
+   // console.log(id,position)
     return buffer;
 }
 
@@ -208,3 +210,10 @@ export function SpawnMobs(id: string,atackindex:number ,socket:any): ByteBuffer 
     return buffer;
 }
 
+export function kill(name: string): ByteBuffer {
+    let buffer = new ByteBuffer();
+    buffer.putByte(17); 
+    buffer.putString(name)
+    console.log('print sendo enviando do packet kill --- name:',name)
+    return buffer;
+}
