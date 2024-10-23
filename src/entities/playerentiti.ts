@@ -1,9 +1,11 @@
 import { Mapa } from '../maps';
 import * as packets from '../packets';
 import { Entity } from './entity';
+import { ByteBuffer } from "../lib/bytebuffer";
+
 
 export class PlayerEntity extends Entity {
-  socket: any;
+  public socket: any;
   private equipamentos: {
       elmo: string;
       peitoral: string;

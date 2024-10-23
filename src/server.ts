@@ -157,7 +157,7 @@ server.on('connection', (socket: any) => {
                         const characterJsonString =(fetchedCharacter.characterinfo);
                         console.log(characterJsonString);
                         socket.character = new playerentiti.PlayerEntity(JSON.parse(characterJsonString),socket);
-                        console.log(socket.character);
+                        //console.log(socket.character);
                     
                         
 

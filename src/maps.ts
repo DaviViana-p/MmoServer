@@ -7,39 +7,48 @@ import * as inventario from './inventario';
 import { Gatherable } from './Gatherable';
 import { Mob } from './entities/Mob'; // Certifique-se de importar a classe Mob
 import { sendPacket } from './server';
+import { Entity } from './entities/entity';
 
 class Mapa {
     public id: string;
     public namespace: string; // Nome único do mapa
-    public entities: Map<string, any>; // Armazena entidades (jogadores e NPCs)
+    public players: Map<string, any>; // Armazena entidades (jogadores e NPCs)
     private gatherables: Gatherable[]; // Gatherables
     private mobs: Mob[]; // Mobs
+    private entities: Map<string, Entity>;
     private respawns: any[]; // Respawns
     private tickInterval: NodeJS.Timeout | null = null; // Timer para ticks
 
     constructor(namespace: string, options?: { gatherables?: any; Mob?: any; respawns?: any }) {
         this.id = uuidv4(); // ID único para o mapa
         this.namespace = namespace;
-        this.entities = new Map<string, any>(); // Entidades no mapa (jogadores, NPCs)
+        this.players = new Map<string, any>(); // Entidades no mapa (jogadores, NPCs)
+        this.entities = new Map<string, Entity>();
 
         // Inicializar mobs carregados do JSON
         this.mobs = options?.Mob?.map((mobData: any) => {
-            // Gerar um id único para cada mob
             const id = uuidv4();
+            console.log(mobData)
             return new Mob(
-                mobData.name,
-                mobData.aparence,
-                mobData.gameplayVariables, // Usa a posição especificada no JSON de entrada
-                this,             // Referência ao mapa atual
-                id,               // ID único do mob
-                mobData.attackPower,
-                100,
-                100,
-                100,
-                100,
-                mobData.patrolPoints // Pontos de patrulha do mob
+              mobData.name,
+              mobData.aparence,
+              mobData.gameplayVariables, // Verifique se isso está definido
+              this,             
+              id,               
+              mobData.attackPower,
+              100,
+              100,
+              100,
+              100,
+              mobData.patrolPoints // Pontos de patrulha do mob
             );
-        }) || [];
+          }) || [];
+          
+          this.mobs.forEach((mob: Mob) => {
+            this.entities.set(mob.id, mob);
+            console.log('enties:',this.entities)
+        });
+        
 
         // Inicializar gatherables carregados do JSON
         this.gatherables = options?.gatherables?.map((gatherableData: Gatherable) => {
@@ -65,7 +74,8 @@ class Mapa {
 
     // Adiciona um jogador no mapa
     addPlayer(clientId: string, socket: any) {
-        this.entities.set(clientId, socket);
+        this.players.set(clientId, socket);
+        this.entities.set(clientId, socket.character);
        // console.log(`Player ${character.nome} entrou no mapa ${this.namespace}`);
        this.broadcast(packets.spawnproxy(socket.character.name,JSON.stringify(socket.character.gameplayVariables.transform)),socket.character.name);
         //console.log('socket.character.characterinfo:',socket.character.gameplayVariables.transform,socket.character.name);
@@ -75,7 +85,8 @@ class Mapa {
 
     // Remove um jogador do mapa
     removePlayer(clientId: string, socket:any) {
-        this.entities.delete(clientId); // Remove a entidade do jogador
+        this.players.delete(clientId); // Remove a entidade do jogador
+        this.entities.set(clientId, socket.character);
         this.broadcast(packets.removecharacter(socket.character.name),socket.id);
        // console.log(`Player ${clientId} saiu do mapa ${this.namespace}`);
     }
@@ -83,7 +94,7 @@ class Mapa {
     // Envia uma mensagem (pacote) a todos os jogadores no mapa
     broadcast(message: ByteBuffer, exceptId: string) {
         
-        this.entities.forEach((character, clientId) => {
+        this.players.forEach((character, clientId) => {
             if (clientId !== exceptId) { // Não enviar para o jogador de origem
                // console.log('excepted',{exceptId},{clientId});
                character.send(message.getBuffer());
@@ -98,7 +109,7 @@ class Mapa {
     // Atualiza a posição de um jogador no mapa e faz broadcast para os outros
     movePlayer(clientId: string, x: number, y: number, z: number, xr: number, yr: number, zr: number, velocity: string,socket:any) {
         //console.log('clientid:',clientId)
-        const character = this.entities.get(clientId);
+        const character = this.players.get(clientId);
         const velocityString: string = velocity; // Exemplo de string de velocity
         const velocityArray: string[] = velocityString.split(","); // Divide a string por vírgula
         
@@ -137,12 +148,11 @@ class Mapa {
 
     // Função para transportar um jogador de um mapa para outro
     transportPlayer(newMap: Mapa, newPosX: string, newPosY: string, newPosZ: string,mapaid:string,socket:any) {
-        const character = this.entities.get(socket.character.name);  // Obtém o personagem pelo clientId
+        const character = this.players.get(socket.character.name);  // Obtém o personagem pelo clientId
     
         if (character) {
             // Remover o jogador do mapa atual
             this.removePlayer(socket.character.name,socket);                       
-    
             // Atualizar a posição do jogador
             socket.character.gameplayVariables.transform.x = newPosX; // Define a nova posição x
             socket.character.gameplayVariables.transform.y = newPosY; // Define a nova posição y
@@ -256,7 +266,7 @@ class Mapa {
         });
        
         
-        this.entities.forEach(entitie => {        
+        this.players.forEach(entitie => {        
             this.broadcast(packets.spawngatherables(result),entitie.id);
             });
 
@@ -265,6 +275,10 @@ class Mapa {
     
 
     getPlayers() {
+        return this.players;
+    }
+    getentities() {
+        //console.log('enties:',this.entities)
         return this.entities;
     }
 
